@@ -1,39 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-function RegisterPage() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+export const RegisterPage = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [name, setName] = useState('');
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        localStorage.setItem('username', username);
-        localStorage.setItem('password', password);
-        // Here you can add your logic to submit the username and password to your backend
-    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(email);
+    }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Username:
-                <input type="text" value={username} onChange={handleUsernameChange} />
-            </label>
-            <br />
-            <label>
-                Password:
-                <input type="password" value={password} onChange={handlePasswordChange} />
-            </label>
-            <br />
-            <button type="submit">Register</button>
+        <div className="auth-form-container">
+            <h2>Register</h2>
+        <form className="register-form" onSubmit={handleSubmit}>
+            <label htmlFor="name">Full name</label>
+            <input value={name} name="name" onChange={(e) => setName(e.target.value)} id="name" placeholder="full Name" />
+            <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+            <button type="submit">Log In</button>
         </form>
-    );
+        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
+    </div>
+    )
 }
-
-export default RegisterPage;

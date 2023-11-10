@@ -1,37 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-function LoginPage() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+export const LoginPage = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // TODO: handle login logic
-    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(email);
+    }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Username:
-                <input type="text" value={username} onChange={handleUsernameChange} />
-            </label>
-            <br />
-            <label>
-                Password:
-                <input type="password" value={password} onChange={handlePasswordChange} />
-            </label>
-            <br />
-            <button type="submit">Login</button>
-        </form>
-    );
+        <div className="auth-form-container">
+            <h2>Login</h2>
+            <form className="login-form" onSubmit={handleSubmit}>
+                <label htmlFor="email">email</label>
+                <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+                <label htmlFor="password">password</label>
+                <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+                <button type="submit">Log In</button>
+            </form>
+            <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here.</button>
+        </div>
+    )
 }
-
-export default LoginPage;
