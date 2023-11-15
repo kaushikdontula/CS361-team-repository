@@ -2,18 +2,29 @@ import React, { useState } from "react";
 import './App.css';
 import { LoginPage } from "./components/LoginPage";
 import { RegisterPage } from "./components/RegisterPage";
+import { LandingPage } from "./components/LandingPage";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
+  const [submitted, setSubmitted] = useState(false);
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
   }
 
+  const handleFormSubmit = () => {
+
+    setSubmitted(true);
+    console.log(submitted);
+
+  }
+
   return (
     <div className="App">
       {
-        currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} /> : <RegisterPage onFormSwitch={toggleForm} />
+        submitted ? ( <LandingPage /> ) : (
+        currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
+        )
       }
     </div>
   );

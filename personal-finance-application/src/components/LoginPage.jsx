@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 export const LoginPage = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
@@ -7,6 +8,11 @@ export const LoginPage = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(email);
+
+        if(props.onSubmit){
+            props.onSubmit();
+        }
+
     }
 
     return (
