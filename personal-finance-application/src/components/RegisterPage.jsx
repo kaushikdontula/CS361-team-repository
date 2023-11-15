@@ -7,7 +7,19 @@ export const RegisterPage = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
+        if(localStorage.getItem('email') === email){
+            alert('Error: Email already in use');
+            return;
+        }
+        localStorage.setItem('name', name);
+        localStorage.setItem('email', email);
+        localStorage.setItem('pass', pass);
+        alert('Account created successfully');
+
+
+        if(props.onSubmit){
+            props.onSubmit();
+        }
     }
 
     return (

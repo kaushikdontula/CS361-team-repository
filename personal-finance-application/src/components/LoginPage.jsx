@@ -7,12 +7,20 @@ export const LoginPage = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
-
-        if(props.onSubmit){
-            props.onSubmit();
+    
+        // Retrieve the data from local storage
+        const storedEmail = localStorage.getItem('email');
+        const storedPassword = localStorage.getItem('pass');
+    
+        // Check if the entered email and password match the stored data
+        if (email === storedEmail && pass === storedPassword) {
+            alert('Login successful');
+            if(props.onSubmit){
+                props.onSubmit();
+            }
+        } else {
+            alert('Error: Invalid email or password');
         }
-
     }
 
     return (
