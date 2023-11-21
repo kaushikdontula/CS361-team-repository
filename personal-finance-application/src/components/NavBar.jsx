@@ -12,6 +12,8 @@ class NavBar extends Component {
             <div class="links">
                 <a class="link-txt" href="/graphs">Graphs</a>
                 <a class="link-txt" href="/spending">Spending</a>
+                <a class="link-txt" href="/settings">Settings</a>
+
             </div>
         </div>
         )
