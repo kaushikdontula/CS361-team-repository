@@ -48,3 +48,37 @@ button {
   color: white;
   text-decoration: underline;
 }
+
+.nav-main{
+  position: fixed;
+  top:0;
+  left:0;
+  display: inline-flex;
+  /* padding:auto; */
+  background-color: #171515;
+  width:100vw;
+  margin-top:0;
+}
+.logo{
+  margin-bottom: 1em;
+  padding-left:4em;
+  padding-right:10em;
+  
+}
+.nav-logo{
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 1.75em;
+}
+.link-txt{
+  font-size: 1.25em;
+  text-decoration: none;
+  color:#a8a8a8;
+  margin-left:1rem;
+}
+.nav-logo{
+  color:#a8a8a8;
+}
+.links{
+  margin: auto 4em 1em auto;          
+}
