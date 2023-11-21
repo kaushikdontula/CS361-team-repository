@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import secureLocalStorage from 'react-secure-storage';
 
 
 export const LoginPage = (props) => {
@@ -10,7 +11,7 @@ export const LoginPage = (props) => {
     
         // Retrieve the data from local storage
         const storedEmail = localStorage.getItem('email');
-        const storedPassword = localStorage.getItem('pass');
+        const storedPassword = secureLocalStorage.getItem('pass');
     
         // Check if the entered email and password match the stored data
         if (email === storedEmail && pass === storedPassword) {
