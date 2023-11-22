@@ -25,6 +25,7 @@ function App() {
         submitted ? ( <LandingPage /> ) : (
         currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
         )
+        
       }
     </div>
   );

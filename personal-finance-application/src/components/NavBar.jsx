@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import SettingsPage from './SettingsPage';
 
-class NavBar extends Component {
+export default class NavBar extends Component {
 
 
     render(){
@@ -12,12 +13,10 @@ class NavBar extends Component {
             <div class="links">
                 <a class="link-txt" href="/graphs">Graphs</a>
                 <a class="link-txt" href="/spending">Spending</a>
-                <a class="link-txt" href="/settings">Settings</a>
+                <a class="link-txt" href="/settings" element={<SettingsPage />} >Settings</a>
 
             </div>
         </div>
         )
     }
 }
-
-export default NavBar;
