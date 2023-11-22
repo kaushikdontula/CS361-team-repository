@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 
-export const SpendingPage = (props) => {
+export const Spending = (props) => {
 
 
     return(

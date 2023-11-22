@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="App">
       {
-        submitted ? ( <LandingPage /> ) : (
+        submitted ? ( <Spending /> ) : (
         currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
         )
       }
