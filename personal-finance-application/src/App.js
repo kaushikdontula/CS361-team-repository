@@ -24,15 +24,13 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-    <Route exact path="/"
-        {
-          submitted ? ( <LandingPage /> ) : (
-          currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
-          )
-        }
-    />
-    </BrowserRouter>
+    <div className="App">
+      {
+        submitted ? ( <LandingPage /> ) : (
+        currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
+        )
+      }
+    </div>
   );
 }
 
