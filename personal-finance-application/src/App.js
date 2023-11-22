@@ -5,6 +5,8 @@ import {LandingPage} from './components/LandingPage'
 import {LoginPage} from './components/LoginPage';
 import {RegisterPage} from './components/RegisterPage';
 import SettingsPage from './components/SettingsPage';
+import {Spending} from './components/Spending';
+
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -26,6 +28,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/spending" element={<Spending />} />
+
           </Routes>
         ) : (
           currentForm === "login" ? 

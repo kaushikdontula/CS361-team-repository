@@ -15,6 +15,8 @@ export default class NavBar extends Component {
                 <Link to="/settings">Settings</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Register</Link>
+                <Link to="/spending">Spending</Link>
+
 
             </div>
         </div>
