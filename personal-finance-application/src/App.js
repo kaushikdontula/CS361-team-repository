@@ -3,6 +3,10 @@ import './App.css';
 import { LoginPage } from "./components/LoginPage";
 import { RegisterPage } from "./components/RegisterPage";
 import { LandingPage } from "./components/LandingPage";
+import { BrowserRouter } from 'react-router-dom';
+
+import { Spending } from "./components/Spending";
+
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -20,13 +24,15 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {
-        submitted ? ( <LandingPage /> ) : (
-        currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
-        )
-      }
-    </div>
+    <BrowserRouter>
+    <Route exact path="/"
+        {
+          submitted ? ( <LandingPage /> ) : (
+          currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
+          )
+        }
+    />
+    </BrowserRouter>
   );
 }
 

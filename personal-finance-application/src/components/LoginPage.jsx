@@ -14,7 +14,6 @@ export const LoginPage = (props) => {
     
         // Check if the entered email and password match the stored data
         if (email === storedEmail && pass === storedPassword) {
-            alert('Login successful');
             if(props.onSubmit){
                 props.onSubmit();
             }
