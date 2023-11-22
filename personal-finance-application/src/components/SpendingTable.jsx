@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 
-export const SpendingTable = (props) => {
+export const SpendingTable = ({data}) => {
 
 
     return(
         
         <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 4</td>
+            <td>{data.name}</td>
+            <td>{data.amount}</td>
+            <td>{data.date}</td>
+            <td>{data.category}</td>
 
             <button>Edit</button>
 
