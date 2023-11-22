@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {LandingPage} from './components/LandingPage'
 import {LoginPage} from './components/LoginPage';
 import {RegisterPage} from './components/RegisterPage';
-import  GraphPage  from "./components/GraphPage";
+import  GraphPage  from "./components/Graph/GraphPage";
 
 
 
