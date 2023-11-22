@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
+import secureLocalStorage from "react-secure-storage";
 
 export const LandingPage = (props) => {
 

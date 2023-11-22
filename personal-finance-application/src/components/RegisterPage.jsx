@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import secureLocalStorage from 'react-secure-storage';
 
 export const RegisterPage = (props) => {
     const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ export const RegisterPage = (props) => {
         }
         localStorage.setItem('name', name);
         localStorage.setItem('email', email);
-        localStorage.setItem('pass', pass);
+        secureLocalStorage.setItem('pass', pass);
         alert('Account created successfully');
 
 
