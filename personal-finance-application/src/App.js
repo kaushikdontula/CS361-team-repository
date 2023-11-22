@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import './App.css';
-import { LoginPage } from "./components/LoginPage";
-import { RegisterPage } from "./components/RegisterPage";
-import { LandingPage } from "./components/LandingPage";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {LandingPage} from './components/LandingPage'
+import {LoginPage} from './components/LoginPage';
+import {RegisterPage} from './components/RegisterPage';
+import SettingsPage from './components/SettingsPage';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -13,20 +15,25 @@ function App() {
   }
 
   const handleFormSubmit = () => {
-
     setSubmitted(true);
     console.log(submitted);
-
   }
 
   return (
     <div className="App">
-      {
-        submitted ? ( <LandingPage /> ) : (
-        currentForm === "login" ? <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> : <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
-        )
-        
-      }
+      <Router>
+        {submitted ? (
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        ) : (
+          currentForm === "login" ? 
+            <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> 
+            : 
+            <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
+        )}
+      </Router>
     </div>
   );
 }
