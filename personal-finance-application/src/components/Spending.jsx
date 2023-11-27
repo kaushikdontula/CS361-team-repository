@@ -5,7 +5,7 @@ import { SpendingTable } from "./SpendingTable";
 export const Spending = (props) => {
 
     //set transactiond data
-    const [transactionData, setTransactionData] = useState({
+    var transactionData= useState({
         name: "",
         amount: 0,
         date: "",
@@ -33,6 +33,10 @@ export const Spending = (props) => {
 
     const closeModal = () => {
         setModalOpen(false);
+    };
+
+    function setTransactionData (data, arg) {
+      transactionData = data;
     };
 
     //modal component to input transaction data
