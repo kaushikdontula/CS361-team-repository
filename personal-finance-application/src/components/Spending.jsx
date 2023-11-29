@@ -29,7 +29,7 @@ export const Spending = (props) => {
       setTransactionsData(storedTransactions);
       setRows(
         storedTransactions.map((transaction, index) => (
-          <SpendingTable key={index} data={transaction} />
+          <SpendingTable key={index} data={transaction} onRemove={removeTransaction} />
         ))
       );
     }
@@ -53,6 +53,22 @@ export const Spending = (props) => {
     localStorage.setItem(localStorageKey, JSON.stringify([...transactionsData, newTransaction]));
 
     closeModal();
+  };
+
+  const removeTransaction = (transactionToRemove) => {
+    const updatedTransactions = transactionsData.filter(
+      (transaction) => transaction !== transactionToRemove
+    );
+  
+    setTransactionsData(updatedTransactions);
+  
+    const updatedRows = updatedTransactions.map((transaction, index) => (
+      <SpendingTable key={index} data={transaction} onRemove={removeTransaction} />
+    ));
+  
+    setRows(updatedRows);
+  
+    localStorage.setItem(localStorageKey, JSON.stringify(updatedTransactions));
   };
 
   const openModal = () => {
@@ -162,9 +178,10 @@ export const Spending = (props) => {
           </thead>
 
           {/* outputs rows of transactions */}
-          <tbody>{rows}</tbody>
+          <tbody>{rows.map((row, index) => React.cloneElement(row, { key: index, onRemove: removeTransaction }))}</tbody>
         </table>
       </div>
+
     </div>
   );
 };

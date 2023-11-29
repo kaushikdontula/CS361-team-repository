@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 
-export const SpendingTable = ({data}) => {
-
+export const SpendingTable = ({data, onRemove}) => {
+    const handleRemove = () => {
+        // Call the onRemove function passed as a prop
+        onRemove(data);
+    };
 
     return(
         
@@ -13,11 +16,10 @@ export const SpendingTable = ({data}) => {
             <td>{data.category}</td>
 
             <button>Edit</button>
+            <button onClick={handleRemove}>Remove</button>
 
         </tr>
          
     )
-
-
 
 }
