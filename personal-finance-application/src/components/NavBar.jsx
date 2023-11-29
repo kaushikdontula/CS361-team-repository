@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SettingsPage from './SettingsPage';
+import {Link} from 'react-router-dom';
 
 export default class NavBar extends Component {
 
