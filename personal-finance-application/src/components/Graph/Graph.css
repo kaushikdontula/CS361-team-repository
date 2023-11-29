@@ -1,0 +1,43 @@
+/* Add this to your Graph.css file or style block in your component */
+
+body {
+    margin: 0;
+    background: linear-gradient(79deg, #7439db, #c66fbc 48%, #f7944d); /* Replace with your linear gradient */
+    font-family: Arial, sans-serif;
+  }
+  
+  .Graph {
+    text-align: left;
+    padding: 20px;
+  }
+  
+  .GraphContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(19, 19, 222, 0.2); /* Blue background with alpha for transparency */
+    backdrop-filter: blur(100px); /* Adjust the blur radius as needed */
+    border-radius: 50px;
+    padding: 100px;
+  }
+  
+  
+  .ExpenseList {
+    text-align: left;
+    list-style: none;
+    padding: 20;
+  }
+  
+  .ExpenseList li {
+    margin-bottom: 10px;
+    font-size: 17px;
+    color: #000000;
+  }
+  
+  h1 {
+    color: #fff; 
+  }
+  
+  .PieChartContainer .recharts-surface {
+    fill: #3a873d; /* Replace with your desired color */
+  }

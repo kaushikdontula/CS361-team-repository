@@ -5,6 +5,8 @@ import {LandingPage} from './components/LandingPage'
 import {LoginPage} from './components/LoginPage';
 import {RegisterPage} from './components/RegisterPage';
 import SettingsPage from './components/SettingsPage';
+import {Spending} from './components/Spending';
+import  GraphPage  from "./components/Graph/GraphPage";
 import { ThemeContext } from './ThemeContext';
 
 function App() {
@@ -35,6 +37,8 @@ setCurrentForm(formName);
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/spending" element={<Spending />} />
+              <Route path="/GraphPage" element={<GraphPage />} />
             </Routes>
           ) : (
             currentForm === "login" ? 
