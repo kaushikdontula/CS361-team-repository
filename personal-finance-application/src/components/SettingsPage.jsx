@@ -1,7 +1,9 @@
-
-import React from 'react';
+import { ThemeContext } from '../ThemeContext';
+import React, {useContext} from 'react';
 
 const SettingsPage = () => {
+  const { toggleTheme } = useContext(ThemeContext);
+  
   return (
     <div>
       <h1>Settings</h1>
@@ -16,6 +18,8 @@ const SettingsPage = () => {
         <input type="password" id="password" name="password" />
 
         <button type="submit">Save</button>
+
+        <button type="button" onClick={toggleTheme}>Toggle Dark Mode</button>
       </form>
     </div>
   );
