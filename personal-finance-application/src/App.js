@@ -5,14 +5,6 @@ import {LandingPage} from './components/LandingPage'
 import {LoginPage} from './components/LoginPage';
 import {RegisterPage} from './components/RegisterPage';
 import SettingsPage from './components/SettingsPage';
-<<<<<<< Updated upstream
-
-function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-  const [submitted, setSubmitted] = useState(false);
-=======
-import {Spending} from './components/Spending';
-import  GraphPage  from "./components/Graph/GraphPage";
 import { ThemeContext } from './ThemeContext';
 
 function App() {
@@ -25,11 +17,7 @@ const [theme, setTheme] = useState('light');
 const toggleForm = (formName) => {
 setCurrentForm(formName);
 }
->>>>>>> Stashed changes
 
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
 
   const handleFormSubmit = () => {
     setSubmitted(true);
@@ -40,23 +28,6 @@ setCurrentForm(formName);
   }
 
   return (
-<<<<<<< Updated upstream
-    <div className="App">
-      <Router>
-        {submitted ? (
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-          </Routes>
-        ) : (
-          currentForm === "login" ? 
-            <LoginPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/> 
-            : 
-            <RegisterPage onFormSwitch={toggleForm} onSubmit={handleFormSubmit}/>
-        )}
-      </Router>
-    </div>
-=======
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className={`App ${theme}`}>
         <Router>
@@ -64,8 +35,6 @@ setCurrentForm(formName);
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/spending" element={<Spending />} />
-              <Route path="/GraphPage" element={<GraphPage />} />
             </Routes>
           ) : (
             currentForm === "login" ? 
@@ -76,8 +45,8 @@ setCurrentForm(formName);
         </Router>
       </div>
     </ThemeContext.Provider>
->>>>>>> Stashed changes
   );
 }
+
 
 export default App;
