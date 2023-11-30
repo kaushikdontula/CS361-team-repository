@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import NavBar from "../NavBar";
-import Spending from "../Spending";
 import { Chart } from 'chart.js/auto';
 import './Graph.css';
 import { localStorageKey } from "/Users/tanish/Desktop/CS361-team-repository/personal-finance-application/src/components/Spending";
@@ -10,30 +9,7 @@ import { localStorageKey } from "/Users/tanish/Desktop/CS361-team-repository/per
 
 const datapoints = localStorage.getItem(localStorageKey);
 const retrievedObject = JSON.parse(datapoints);
-console.log(retrievedObject)
-// const firstName = retrievedObject[].name;
-// console.log(firstName);
-
-// const reterivingdata = () => {
-//   // const firstName =retrievedObject.name;
-//   // const firstAmount =retrievedObject.amount;
-//   // const firstData =retrievedObject.date;
-//   // const firstCategory =retrievedObject.category;
-   
-
-// };
-
-// for (let i = 0; i < retrievedObject.length; i++) {
-//   console.log("Name:" + retrievedObject[i].name);
-//   console.log("Amount:" + retrievedObject[i].amount);
-//   console.log("Date:" + retrievedObject[i].date);
-//   console.log("Category:" + retrievedObject[i].category);
-   
-//  }
-
-// console.log(firstName);
-
-// console.log(retrievedObject);
+console.log(retrievedObject);
 const GraphApp = () => {
   // Importing localStorageKey from Spending
   const chartRef = useRef(null);
@@ -61,7 +37,6 @@ const GraphApp = () => {
         date: retrievedObject[i].date,
         category: retrievedObject[i].category
       };
-     
   }
 
   for (let i = 0; i < retrievedObject.length; i++) {
@@ -71,38 +46,18 @@ const GraphApp = () => {
     console.log("Category:" + data[i].category);
      
   }
-  // const data = [
-
-  //   { 
-      
-  //     name: "tm",
-  //     value: 300, 
-  //     date: "2023-11-29",
-  //     category: "Rent"
-  //   }
-  //   // { 
-  //   //   name: "house 2",
-  //   //   value: 400, 
-  //   //   date: "2023-12-29",
-  //   //   category: "Rent"
-  //   // },
-  //   // { name: "Subscription", value: 230, date: "2023-11-30", category: "Subscription" },
-  //   // { name: "Groceries", value: 150, date: "2023-11-30", category: "Groceries" },
-
-  //   // // Add more data entries as needed
-  // ];
-
+  
   const uniqueDates = [...new Set(data.map(item => item.date))];
   const uniqueCategories = [...new Set(data.map(item => item.category))];
 
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
-
+  
     // Destroy the previous Chart instance if it exists
     if (chartRef.current.chart) {
       chartRef.current.chart.destroy();
     }
-
+  
     // Filter data based on selected date and category
     const filteredData = data.filter(item => {
       return (
@@ -110,12 +65,12 @@ const GraphApp = () => {
         (selectedCategory === "All" || item.category === selectedCategory)
       );
     });
-
+  
     // Create a new Chart instance
     chartRef.current.chart = new Chart(ctx, {
       type: "pie",
       data: {
-        labels: filteredData.map(item => item.name),
+        labels: filteredData.map(item => item.category), // Use category as labels
         datasets: [
           {
             data: filteredData.map(item => item.value),
