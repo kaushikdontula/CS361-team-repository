@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { SpendingTable } from "./SpendingTable";
 
+export const localStorageKey = "transactionsData";
+
 export const Spending = (props) => {
   const localStorageKey = "transactionsData";
 
@@ -51,6 +53,8 @@ export const Spending = (props) => {
 
     // update local storage
     localStorage.setItem(localStorageKey, JSON.stringify([...transactionsData, newTransaction]));
+    // console.log(localStorage.getItem(localStorageKey));
+
 
     closeModal();
   };
