@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import NavBar from "../NavBar";
 import { Chart } from 'chart.js/auto';
 import './Graph.css';
-import { localStorageKey } from "/Users/tanish/Desktop/CS361-team-repository/personal-finance-application/src/components/Spending";
+import { localStorageKey } from "../Spending";
 
 //console.log(localStorage.getItem(localStorageKey));
 
