@@ -6,15 +6,34 @@ import './Graph.css';
 import { localStorageKey } from "/Users/tanish/Desktop/CS361-team-repository/personal-finance-application/src/components/Spending";
 
 //console.log(localStorage.getItem(localStorageKey));
+
+
 const datapoints = localStorage.getItem(localStorageKey);
-//console.log(datapoints.split('{'));
 const retrievedObject = JSON.parse(datapoints);
-const firstName = retrievedObject[0].name;
-console.log(firstName);
+console.log(retrievedObject)
+// const firstName = retrievedObject[].name;
+// console.log(firstName);
 
+// const reterivingdata = () => {
+//   // const firstName =retrievedObject.name;
+//   // const firstAmount =retrievedObject.amount;
+//   // const firstData =retrievedObject.date;
+//   // const firstCategory =retrievedObject.category;
+   
 
+// };
 
-console.log(retrievedObject);
+// for (let i = 0; i < retrievedObject.length; i++) {
+//   console.log("Name:" + retrievedObject[i].name);
+//   console.log("Amount:" + retrievedObject[i].amount);
+//   console.log("Date:" + retrievedObject[i].date);
+//   console.log("Category:" + retrievedObject[i].category);
+   
+//  }
+
+// console.log(firstName);
+
+// console.log(retrievedObject);
 const GraphApp = () => {
   // Importing localStorageKey from Spending
   const chartRef = useRef(null);
@@ -30,23 +49,48 @@ const GraphApp = () => {
     return color;
   };
 
-  const data = [
-    { 
-      name: firstName,
-      value: 300, 
-      date: "2023-11-29",
-      category: "Rent"
-    },
-    { 
-      name: "house 2",
-      value: 400, 
-      date: "2023-12-29",
-      category: "Rent"
-    },
-    { name: "Subscription", value: 230, date: "2023-11-30", category: "Subscription" },
-    { name: "Groceries", value: 150, date: "2023-11-30", category: "Groceries" },
-    // Add more data entries as needed
-  ];
+  const data = [retrievedObject.length];
+  console.log(data.length);
+  console.log('hello');
+
+  for (let i = 0; i < retrievedObject.length; i++) {
+    data[i] = 
+      { 
+        name: retrievedObject[i].name,
+        value: retrievedObject[i].amount, 
+        date: retrievedObject[i].date,
+        category: retrievedObject[i].category
+      };
+     
+  }
+
+  for (let i = 0; i < retrievedObject.length; i++) {
+    console.log("Name:" + data[i].name);
+    console.log("Amount:" + data[i].amount);
+    console.log("Date:" + data[i].date);
+    console.log("Category:" + data[i].category);
+     
+  }
+  // const data = [
+
+  //   { 
+      
+  //     name: "tm",
+  //     value: 300, 
+  //     date: "2023-11-29",
+  //     category: "Rent"
+  //   }
+  //   // { 
+  //   //   name: "house 2",
+  //   //   value: 400, 
+  //   //   date: "2023-12-29",
+  //   //   category: "Rent"
+  //   // },
+  //   // { name: "Subscription", value: 230, date: "2023-11-30", category: "Subscription" },
+  //   // { name: "Groceries", value: 150, date: "2023-11-30", category: "Groceries" },
+
+  //   // // Add more data entries as needed
+  // ];
 
   const uniqueDates = [...new Set(data.map(item => item.date))];
   const uniqueCategories = [...new Set(data.map(item => item.category))];
