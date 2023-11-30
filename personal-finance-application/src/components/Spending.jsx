@@ -10,6 +10,10 @@ export const Spending = (props) => {
 
   // state for managing model
   const [isModalOpen, setModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState("Add Transaction");
+
+  const [editingTransaction, setEditingTransaction] = useState(null);
+
 
   // state to manage transaction input data
   const [transactionData, setTransactionData] = useState({
@@ -29,30 +33,68 @@ export const Spending = (props) => {
       setTransactionsData(storedTransactions);
       setRows(
         storedTransactions.map((transaction, index) => (
-          <SpendingTable key={index} data={transaction} />
+          <SpendingTable key={index} data={transaction} onRemove={removeTransaction} onEdit={editTransaction}/>
         ))
       );
     }
   }, []);
 
-  // adding a transaction to the table
   const addTransactionToTable = () => {
-    // create a new transaction object
-    const newTransaction = { ...transactionData };
-
-    // add the transaction object to the array of transactions
-    setTransactionsData((prevTransactions) => [...prevTransactions, newTransaction]);
-
-    // update the rows for the table
-    setRows((prevRows) => [
-      ...prevRows,
-      <SpendingTable key={prevRows.length} data={newTransaction} />,
-    ]);
-
-    // update local storage
-    localStorage.setItem(localStorageKey, JSON.stringify([...transactionsData, newTransaction]));
-
+    let updatedTransactions;
+  
+    if (editingTransaction) {
+      // If editing, replace the old transaction with the new updated one
+      updatedTransactions = transactionsData.map((transaction) =>
+        transaction === editingTransaction ? { ...transactionData } : transaction
+      );
+      setEditingTransaction(null);
+    } else {
+      // If not editing, add a new transaction
+      updatedTransactions = [...transactionsData, { ...transactionData }];
+    }
+  
+    // Update the transactionsData state
+    setTransactionsData(updatedTransactions);
+  
+    // Update the rows for the table
+    setRows(
+      updatedTransactions.map((transaction, index) => (
+        <SpendingTable key={index} data={transaction} onRemove={removeTransaction} onEdit={editTransaction} />
+      ))
+    );
+  
+    // Update local storage
+    localStorage.setItem(localStorageKey, JSON.stringify(updatedTransactions));
+  
     closeModal();
+  };
+  const removeTransaction = (transactionToRemove) => {
+    const updatedTransactions = transactionsData.filter(
+      (transaction) => transaction !== transactionToRemove
+    );
+  
+    setTransactionsData(updatedTransactions);
+  
+    const updatedRows = updatedTransactions.map((transaction, index) => (
+      <SpendingTable key={index} data={transaction} onRemove={removeTransaction} />
+    ));
+  
+    setRows(updatedRows);
+  
+    localStorage.setItem(localStorageKey, JSON.stringify(updatedTransactions));
+  };
+
+  const editTransaction = (transactionToEdit) => {
+    console.log(transactionToEdit);
+    setEditingTransaction(transactionToEdit);
+    setTransactionData({
+      name: transactionToEdit.name,
+      amount: transactionToEdit.amount,
+      date: transactionToEdit.date,
+      category: transactionToEdit.category,
+    });
+    setModalAction("Done Editing");
+    openModal();
   };
 
   const openModal = () => {
@@ -60,6 +102,7 @@ export const Spending = (props) => {
   };
 
   const closeModal = () => {
+    setModalAction("Add Transaction");
     setModalOpen(false);
   };
 
@@ -131,7 +174,7 @@ export const Spending = (props) => {
                 }
               />
 
-              <button onClick={addTransactionToTable}>Add Transaction</button>
+              <button onClick={addTransactionToTable}>{modalAction}</button>
             </div>
           </div>
         )}
@@ -162,9 +205,10 @@ export const Spending = (props) => {
           </thead>
 
           {/* outputs rows of transactions */}
-          <tbody>{rows}</tbody>
+          <tbody>{rows.map((row, index) => React.cloneElement(row, { key: index, onRemove: removeTransaction, onEdit: editTransaction}))}</tbody>
         </table>
       </div>
+
     </div>
   );
 };
