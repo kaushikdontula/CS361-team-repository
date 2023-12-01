@@ -8,8 +8,8 @@ import { localStorageKey } from "../Spending";
 
 
 
-//const datapoints; // = localStorage.getItem(localStorageKey);
-//const retrievedObject; // = JSON.parse(datapoints);
+// const  datapoints = localStorage.getItem(localStorageKey);
+// const retrievedObject = JSON.parse(datapoints);
 //console.log(retrievedObject);
 
 const GraphApp = () => {
@@ -17,7 +17,26 @@ const GraphApp = () => {
   const chartRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState("All"); // Default to show all dates
   const [selectedCategory, setSelectedCategory] = useState("All"); // Default to show all categories
+  // pust the below code in a function 
+  let  datapoints = localStorage.getItem(localStorageKey);
+  let retrievedObject = JSON.parse(datapoints);
+
   const data = [];
+
+  useEffect(() => {
+
+    let timerID = setTimeout(() => {
+      datapoints = localStorage.getItem(localStorageKey);
+      retrievedObject = JSON.parse(datapoints);
+
+    }, 2000);
+
+    return () => {
+      clearTimeout(timerID);
+    }
+
+
+  }, [retrievedObject]);
 
   
 
@@ -29,30 +48,6 @@ const GraphApp = () => {
     }
     return color;
   };
-
-    let  datapoints;
-    let retrievedObject;
-
-    useEffect(() => {
-      
-       datapoints = localStorage.getItem(localStorageKey);
-       retrievedObject = JSON.parse(datapoints);
-      //fetchDataFromLocalStorage();
-
-      // Set up an interval to fetch updated data every 2 seconds
-      const intervalId = setInterval(() => {
-        datapoints = localStorage.getItem(localStorageKey);
-        retrievedObject = JSON.parse(datapoints);
-
-        //fetchDataFromLocalStorage();
-      }, 1000);
-
-      // Cleanup the interval when the component is unmounted
-      return () => {
-        clearInterval(intervalId);
-      };
-    }, []);
-
 
   for (let i = 0; i < retrievedObject.length; i++) {
     data[i] = 
