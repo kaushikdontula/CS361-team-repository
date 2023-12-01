@@ -7,14 +7,17 @@ import { localStorageKey } from "../Spending";
 //console.log(localStorage.getItem(localStorageKey));
 
 
+
 const datapoints = localStorage.getItem(localStorageKey);
 const retrievedObject = JSON.parse(datapoints);
 console.log(retrievedObject);
+
 const GraphApp = () => {
   // Importing localStorageKey from Spending
   const chartRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState("All"); // Default to show all dates
   const [selectedCategory, setSelectedCategory] = useState("All"); // Default to show all categories
+  const data = [];
 
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
@@ -25,9 +28,13 @@ const GraphApp = () => {
     return color;
   };
 
-  const data = [retrievedObject.length];
-  console.log(data.length);
-  console.log('hello');
+  retrievedObject[0].name = "NAME";
+  retrievedObject[0].amount = "AMOUNT";
+  retrievedObject[0].date = "DATE";
+  retrievedObject[0].category = "CATEGORY";
+
+
+ 
 
   for (let i = 0; i < retrievedObject.length; i++) {
     data[i] = 
