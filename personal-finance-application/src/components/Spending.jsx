@@ -40,6 +40,15 @@ export const Spending = (props) => {
   }, []);
 
   const addTransactionToTable = () => {
+
+    //need to do this bc if not whneevber you try to add transaction it loads that last one
+    setTransactionData({
+      name: "",
+      amount: 0,
+      date: "",
+      category: "",
+    });
+
     let updatedTransactions;
   
     if (editingTransaction) {
@@ -114,7 +123,7 @@ export const Spending = (props) => {
           <div className="overlay" onClick={onClose}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
               <span className="close" onClick={onClose}>
-                &times;
+                Cancel
               </span>
               <h2>Input Data</h2>
 
