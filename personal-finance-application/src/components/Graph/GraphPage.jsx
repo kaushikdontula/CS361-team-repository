@@ -4,14 +4,6 @@ import { Chart } from 'chart.js/auto';
 import './Graph.css';
 import { localStorageKey } from "../Spending";
 
-//console.log(localStorage.getItem(localStorageKey));
-
-
-
-// const  datapoints = localStorage.getItem(localStorageKey);
-// const retrievedObject = JSON.parse(datapoints);
-//console.log(retrievedObject);
-
 const GraphApp = () => {
   // Importing localStorageKey from Spending
   const chartRef = useRef(null);
@@ -20,6 +12,18 @@ const GraphApp = () => {
   // pust the below code in a function 
   let  datapoints = localStorage.getItem(localStorageKey);
   let retrievedObject = JSON.parse(datapoints);
+
+  // if (retrievedObject === null) {
+  //   return (
+  //     <div>
+  //       <NavBar />
+  //       <div className="Graph">
+  //         <h1>Monthly Expenses</h1>
+  //         <p id="noDataMessage">No data, add data for the graph to display</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const data = [];
 
@@ -148,11 +152,5 @@ const GraphApp = () => {
 };
 
 export default GraphApp;
-
-
-
-
-
-
 
 
