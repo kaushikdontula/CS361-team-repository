@@ -2,6 +2,7 @@ import { ThemeContext } from '../ThemeContext';
 import React, { useContext, useState, } from 'react';
 import NavBar from "./NavBar";
 import {useNavigate} from 'react-router-dom';
+import secureLocalStorage from 'react-secure-storage';
 
 const SettingsPage = () => {
   const { toggleTheme } = useContext(ThemeContext);
@@ -9,6 +10,8 @@ const SettingsPage = () => {
   const [cardName, setCardName] = useState('');
   const [showCardName, setShowCardName] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   const navigate = useNavigate();
   const handleEditSpendingData = () => {
@@ -100,6 +103,35 @@ const SettingsPage = () => {
           </button>
         </h1>
         <button type="button" onClick={toggleTheme}>Toggle Dark Mode</button>
+        <h1>
+        <button type="button" onClick={handleChangePassword}>Change Password</button>
+        <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Enter current password"
+              style={{
+                padding: '10px',
+                fontSize: '16px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                width: '300px'
+              }}
+            />
+        <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter new password"
+              style={{
+                padding: '10px',
+                fontSize: '16px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                width: '300px'
+              }}
+            />
+      </h1>
       </form>
     </div>
   );
