@@ -7,23 +7,14 @@ import { localStorageKey } from "../Spending";
 const GraphApp = () => {
   // Importing localStorageKey from Spending
   const chartRef = useRef(null);
+  const barChartRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState("All"); // Default to show all dates
   const [selectedCategory, setSelectedCategory] = useState("All"); // Default to show all categories
   // pust the below code in a function 
   let  datapoints = localStorage.getItem(localStorageKey);
   let retrievedObject = JSON.parse(datapoints);
 
-  // if (retrievedObject === null) {
-  //   return (
-  //     <div>
-  //       <NavBar />
-  //       <div className="Graph">
-  //         <h1>Monthly Expenses</h1>
-  //         <p id="noDataMessage">No data, add data for the graph to display</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  
 
   const data = [];
 
@@ -81,6 +72,9 @@ const GraphApp = () => {
     if (chartRef.current.chart) {
       chartRef.current.chart.destroy();
     }
+    if (barChartRef.current.chart) {
+      barChartRef.current.chart.destroy();
+    }
   
     // Filter data based on selected date and category
     const filteredData = data.filter(item => {
@@ -103,6 +97,21 @@ const GraphApp = () => {
         ],
       },
     });
+
+    const barCtx = barChartRef.current.getContext("2d");
+    barChartRef.current.chart = new Chart(barCtx, {
+      type: "bar",
+      data: {
+        labels: filteredData.map(item => item.category),
+        datasets: [
+          {
+            label: "Amount",
+            data: filteredData.map(item => item.value),
+            backgroundColor: filteredData.map(() => getRandomColor()),
+          },
+        ],
+      },
+    });
   }, [data, selectedDate, selectedCategory]);
 
   return (
@@ -110,41 +119,51 @@ const GraphApp = () => {
       {/* Include NavBar component */}
       <NavBar />
 
-      <div className="Graph">
-        <h1>Monthly Expenses</h1>
+      <div className="PageContainer">
+        {/* Dropdowns on the left side */}
+        <div className="Dropdown">
+          <label htmlFor="dateDropdown">Select Date: </label>
+          <select
+            id="dateDropdown"
+            onChange={(e) => setSelectedDate(e.target.value)}
+            value={selectedDate}
+          >
+            <option value="All">All</option>
+            {uniqueDates.map((date) => (
+              <option key={date} value={date}>
+                {date}
+              </option>
+            ))}
+          </select>
 
-        {/* Dropdown for Date */}
-        <label htmlFor="dateDropdown">Select Date: </label>
-        <select
-          id="dateDropdown"
-          onChange={(e) => setSelectedDate(e.target.value)}
-          value={selectedDate}
-        >
-          <option value="All">All</option>
-          {uniqueDates.map((date) => (
-            <option key={date} value={date}>
-              {date}
-            </option>
-          ))}
-        </select>
+          <label htmlFor="categoryDropdown">Select Category: </label>
+          <select
+            id="categoryDropdown"
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            value={selectedCategory}
+          >
+            <option value="All">All</option>
+            {uniqueCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        {/* Dropdown for Category */}
-        <label htmlFor="categoryDropdown">Select Category: </label>
-        <select
-          id="categoryDropdown"
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          value={selectedCategory}
-        >
-          <option value="All">All</option>
-          {uniqueCategories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        {/* Main content container */}
+        <div className="MainContent">
+          {/* Charts */}
+          <div className="GraphContainer">
+            <div className="ChartContainer">
+              <canvas ref={chartRef} width="400" height="400" />
+            </div>
+            <div className="ChartContainer">
+              <canvas ref={barChartRef} width="400" height="400" />
+            </div>
+          </div>
 
-        <div className="GraphContainer">
-          <canvas ref={chartRef} width="400" height="400" />
+          {/* Additional content goes here if needed */}
         </div>
       </div>
     </div>
@@ -152,5 +171,3 @@ const GraphApp = () => {
 };
 
 export default GraphApp;
-
-
