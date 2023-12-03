@@ -1,6 +1,7 @@
 import { ThemeContext } from '../ThemeContext';
 import React, { useContext, useState } from 'react';
 import NavBar from "./NavBar";
+import secureLocalStorage from 'react-secure-storage';
 
 const SettingsPage = () => {
   const { toggleTheme } = useContext(ThemeContext);
@@ -32,10 +33,22 @@ const SettingsPage = () => {
     setShowCardName(!showCardName);
   };
 
+const [currentPassword, setCurrentPassword] = useState('');
+const [newPassword, setNewPassword] = useState('');
+
   const handleChangePassword = () => {
-    // Delete the old password and set the new one
-    // This is a placeholder, replace it with your actual logic
+    const storedPassword = secureLocalStorage.getItem('pass');
     console.log('Password change initiated');
+    if (currentPassword !== storedPassword) {
+      alert('Current password does not match stored password');
+      return;
+    }
+    if (newPassword.length < 8) {
+      alert('New password must be at least 8 characters long');
+      return;
+    }
+  secureLocalStorage.setItem('pass', newPassword);
+  alert('Password changed successfully');
   };
 
   return (
@@ -73,6 +86,32 @@ const SettingsPage = () => {
 
         <h1>
         <button type="button" onClick={handleChangePassword}>Change Password</button>
+        <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Enter current password"
+              style={{
+                padding: '10px',
+                fontSize: '16px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                width: '300px'
+              }}
+            />
+        <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter new password"
+              style={{
+                padding: '10px',
+                fontSize: '16px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                width: '300px'
+              }}
+            />
       </h1>
       </form>
     </div>
