@@ -6,16 +6,16 @@ import { localStorageKey } from "../Spending";
 
 const GraphApp = () => {
   // Importing localStorageKey from Spending
+  // const chartRef = useRef(null);
+  // const barChartRef = useRef(null);
   const chartRef = useRef(null);
-  const barChartRef = useRef(null);
+  //const mychart = useRef(null);
   const [selectedDate, setSelectedDate] = useState("All"); // Default to show all dates
   const [selectedCategory, setSelectedCategory] = useState("All"); // Default to show all categories
+  const [chartType, setChartType] = useState("pie");
   // pust the below code in a function 
   let  datapoints = localStorage.getItem(localStorageKey);
   let retrievedObject = JSON.parse(datapoints);
-
-  
-
   const data = [];
 
   useEffect(() => {
@@ -30,10 +30,7 @@ const GraphApp = () => {
       clearTimeout(timerID);
     }
 
-
   }, [retrievedObject]);
-
-  
 
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
@@ -62,13 +59,6 @@ const GraphApp = () => {
      
   }
 
-
-  
-
-  // console.log("hello:");
-  // console.log(uniqueDates);
-
-
   const formatMonth = (date) => {
     const [year, month] = date.split('-');
     const monthName = new Date(`${year}-${month}-01`).toLocaleString('default', { month: 'long' });
@@ -78,59 +68,63 @@ const GraphApp = () => {
   const uniqueDates = [...new Set(data.map(item => formatMonth(item.date)))];
   const uniqueCategories = [...new Set(data.map(item => item.category))];
 
+  const toggleChartType = () => {
+    setChartType(prevChartType => (prevChartType === "pie" ? "bar" : "pie"));
+  };
+
+  // UseEffect to load data and update charts
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
-  
-    // Destroy the previous Chart instance if it exists
+    //const barCtx = barChartRef.current.getContext("2d");
+
+    // Destroy existing charts before creating new ones
     if (chartRef.current.chart) {
       chartRef.current.chart.destroy();
     }
-    if (barChartRef.current.chart) {
-      barChartRef.current.chart.destroy();
-    }
-  
-    // Filter data based on selected date and category
+    // if (barChartRef.current.chart) {
+    //   chartRef.current.chart.destroy();
+    // }
+
+    // Filter data based on selected options
     const filteredData = data.filter(item => {
-    const selectedMonth = selectedDate === 'All' ? '' : selectedDate.split(' ')[0]; // Extract month name
-    const itemMonth = formatMonth(item.date).split(' ')[0]; // Extract month name from item
-    return (
-      (selectedDate === 'All' || itemMonth === selectedMonth) &&
-      (selectedCategory === "All" || item.category === selectedCategory)
-    );
-  });
-  
-    // Create a new Chart instance
-    chartRef.current.chart = new Chart(ctx, {
-      type: "pie",
-      data: {
-        labels: filteredData.map(item => item.category), // Use category as labels
-        datasets: [
-          {
-            data: filteredData.map(item => item.value),
-            backgroundColor: filteredData.map(item => item.color || getRandomColor()),
-          },
-        ],
-      },
+      const selectedMonth = selectedDate === "All" ? "" : selectedDate.split(" ")[0];
+      const itemMonth = formatMonth(item.date).split(" ")[0];
+      return (
+        (selectedDate === "All" || itemMonth === selectedMonth) &&
+        (selectedCategory === "All" || item.category === selectedCategory)
+      );
     });
 
-    const barCtx = barChartRef.current.getContext("2d");
-    barChartRef.current.chart = new Chart(barCtx, {
-      type: "bar",
-      data: {
-        labels: filteredData.map(item => item.category),
-        datasets: [
-          {
-            label: "Amount",
-            data: filteredData.map(item => item.value),
-            backgroundColor: filteredData.map(() => getRandomColor()),
-          },
-        ],
-      },
-    });
-  }, [data, selectedDate, selectedCategory]);
-
-
-  
+    // Create new chart based on the selected chart type
+    if (chartType === "pie") {
+      chartRef.current.chart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: filteredData.map(item => item.category),
+          datasets: [
+            {
+              data: filteredData.map(item => item.value),
+              backgroundColor: filteredData.map(item => item.color || getRandomColor()),
+            },
+          ],
+        },
+      });
+    } else if (chartType === "bar") {
+      chartRef.current.chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: filteredData.map(item => item.category),
+          datasets: [
+            {
+              label: "Amount",
+              data: filteredData.map(item => item.value),
+              backgroundColor: filteredData.map(() => getRandomColor()),
+            },
+          ],
+        },
+      });
+    }
+  }, [data, selectedDate, selectedCategory, chartType]);
 
   return (
     <div>
@@ -140,6 +134,9 @@ const GraphApp = () => {
       <div className="PageContainer">
         {/* Dropdowns on the left side */}
         <div className="Dropdown">
+          <button onClick={toggleChartType}>
+          Toggle Chart Type ({chartType === "pie" ? "Bar" : "Pie"})
+          </button>
           <label htmlFor="dateDropdown">Select Date: </label>
           <select
             id="dateDropdown"
@@ -169,16 +166,13 @@ const GraphApp = () => {
           </select>
         </div>
 
+       
         {/* Main content container */}
         <div className="MainContent">
           {/* Charts */}
           <div className="GraphContainer">
-            <div className="ChartContainer">
-              <canvas ref={chartRef} width="400" height="400" />
-            </div>
-            <div className="ChartContainer">
-              <canvas ref={barChartRef} width="400" height="400" />
-            </div>
+            <canvas ref={chartRef} width="400" height="400" />
+            {/* <canvas ref={barChartRef} width="400" height="400" /> */}
           </div>
 
           {/* Additional content goes here if needed */}
@@ -189,3 +183,4 @@ const GraphApp = () => {
 };
 
 export default GraphApp;
+
