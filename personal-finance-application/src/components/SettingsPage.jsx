@@ -32,6 +32,12 @@ const SettingsPage = () => {
     setShowCardName(!showCardName);
   };
 
+  const handleChangePassword = () => {
+    // Delete the old password and set the new one
+    // This is a placeholder, replace it with your actual logic
+    console.log('Password change initiated');
+  };
+
   return (
     <div>
       <NavBar/>
@@ -64,6 +70,10 @@ const SettingsPage = () => {
         </h1>
 
         <button type="button" onClick={toggleTheme}>Toggle Dark Mode</button>
+
+        <h1>
+        <button type="button" onClick={handleChangePassword}>Change Password</button>
+      </h1>
       </form>
     </div>
   );
