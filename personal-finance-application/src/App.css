@@ -160,6 +160,10 @@ tbody tr:hover {
 .modal {
   max-width: 400px; /* Adjust the maximum width as needed */
   margin: 0 auto; /* Center the modal horizontally */
+  background-color: #7439db;
+  border-radius: 15px; /* Adjust the border-radius for rounded corners */
+  padding: 20px; /* Add padding for better aesthetics */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Add box-shadow for the cushioned border effect */
 }
 
 .modal h2 {
@@ -190,4 +194,19 @@ tbody tr:hover {
 
 .modal button:hover {
   background-color: #5a2d9c; /* Darker color on hover */
+}
+
+.modal .close {
+  font-size: 1.5em;
+  color: white;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+  padding: .5em;
+  border-radius: 5px;
+  /* transition: color 0.3s; Add transition for a smooth effect */
+}
+
+.modal .close:hover {
+  background-color: #5a2d9c; /* Change color on hover */
 }
