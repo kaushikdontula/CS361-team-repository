@@ -1,0 +1,1 @@
+//view current cards and delete current cards
