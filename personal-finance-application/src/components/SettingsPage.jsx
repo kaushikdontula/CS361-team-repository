@@ -1,23 +1,67 @@
 import { ThemeContext } from '../ThemeContext';
-import React, {useContext} from 'react';
+import React, { useContext, useState } from 'react';
+import NavBar from "./NavBar";
 
 const SettingsPage = () => {
   const { toggleTheme } = useContext(ThemeContext);
-  
+  const [lastSavedTime, setLastSavedTime] = useState(null);
+  const [cardName, setCardName] = useState('');
+  const [showCardName, setShowCardName] = useState(false);
+
+  const handleSaveData = () => {
+    if (navigator.onLine) {
+      const currentTime = new Date().toLocaleString();
+      setLastSavedTime(currentTime);
+      alert("Data saved successfully at time: " + currentTime);
+      // Save the user's data here
+    } else {
+      alert("No internet connection. Data cannot be saved.");
+    }
+  };
+
+  const handleLogout = () => {
+    window.location.href = "/";
+  };
+
+  const handleCardNameChange = (event) => {
+    setCardName(event.target.value);
+    localStorage.setItem('cardName', cardName);
+  };
+
+  const handleAddSpendingMethod = () => {
+    setShowCardName(!showCardName);
+  };
+
   return (
     <div>
+      <NavBar/>
       <h1>Settings</h1>
       <form>
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" name="name" />
-
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" />
-
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" />
-
-        <button type="submit">Save</button>
+        <h1>
+          <button type="button" onClick={handleLogout}>Logout</button>
+        </h1>
+        <h1>
+          {showCardName ? (
+            <input
+              type="text"
+              value={cardName}
+              onChange={handleCardNameChange}
+              placeholder="Enter card name"
+              style={{
+                padding: '10px',
+                fontSize: '16px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                width: '300px'
+              }}
+            />
+          ) : (
+            <button type="button" onClick={handleAddSpendingMethod}>Add Spending Method</button>
+          )}
+        </h1>
+        <h1>
+          <button type="button" onClick={handleSaveData}>Manual backup</button>
+        </h1>
 
         <button type="button" onClick={toggleTheme}>Toggle Dark Mode</button>
       </form>
