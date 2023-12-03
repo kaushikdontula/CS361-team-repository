@@ -11,6 +11,10 @@ export const RegisterPage = (props) => {
         if(localStorage.getItem('email') === email){
             alert('Error: Email already in use');
             return;
+        if (pass.length < 8) {
+            alert('Error: Password must be at least 8 characters long');
+            return;
+        }
         }
         localStorage.setItem('name', name);
         localStorage.setItem('email', email);
