@@ -59,6 +59,21 @@ const SettingsPage = () => {
     }
   };
 
+  const handleChangePassword = () => {
+    const storedPassword = secureLocalStorage.getItem('pass');
+
+    if (storedPassword != currentPassword) {
+      alert("passwords do not match");
+    }
+
+    if (newPassword.length < 8) {
+      alert("password must be at least 8 characters");
+    }
+    if (storedPassword == currentPassword && newPassword.length >= 8) {
+    alert("password changed successfully");
+    }
+  }
+
   return (
     <div>
       <NavBar/>
