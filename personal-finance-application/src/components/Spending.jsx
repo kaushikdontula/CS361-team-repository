@@ -2,6 +2,82 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { SpendingTable } from "./SpendingTable";
 
+  // modal component to input transaction data
+const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransactionToTable, modalAction }) => {
+  return (
+    <>
+      {isOpen && (
+        <div className="overlay" onClick={onClose}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <span className="close" onClick={onClose}>
+              Cancel
+            </span>
+            <h2>Input Data</h2>
+
+            {/* name input */}
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="Name"
+              value={transactionData.name}
+              onChange={(e) =>
+                setTransactionData({
+                  ...transactionData,
+                  name: e.target.value,
+                })
+              }
+            />
+
+            {/* amount input */}
+            <label htmlFor="amount">Amount</label>
+            <input
+              type="number"
+              id="amount"
+              value={transactionData.amount}
+              onChange={(e) =>
+                setTransactionData({
+                  ...transactionData,
+                  amount: e.target.value !== "" ? Number(e.target.value) : 0,
+                })
+              }
+            />
+
+            {/* date input */}
+            <label htmlFor="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              value={transactionData.date}
+              onChange={(e) =>
+                setTransactionData({
+                  ...transactionData,
+                  date: e.target.value,
+                })
+              }
+            />
+
+            {/* category input */}
+            <label htmlFor="Category">Category</label>
+            <input
+              type="text"
+              id="Category"
+              value={transactionData.category}
+              onChange={(e) =>
+                setTransactionData({
+                  ...transactionData,
+                  category: e.target.value,
+                })
+              }
+            />
+
+            <button onClick={addTransactionToTable}>{modalAction}</button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
 export const Spending = (props) => {
   const localStorageKey = "transactionsData";
 
@@ -18,7 +94,7 @@ export const Spending = (props) => {
   // state to manage transaction input data
   const [transactionData, setTransactionData] = useState({
     name: "",
-    amount: 0,
+    amount: null,
     date: "",
     category: "",
   });
@@ -40,6 +116,15 @@ export const Spending = (props) => {
   }, []);
 
   const addTransactionToTable = () => {
+
+    //need to do this bc if not whneevber you try to add transaction it loads that last one
+    setTransactionData({
+      name: "",
+      amount: null,
+      date: "",
+      category: "",
+    });
+
     let updatedTransactions;
   
     if (editingTransaction) {
@@ -106,81 +191,7 @@ export const Spending = (props) => {
     setModalOpen(false);
   };
 
-  // modal component to input transaction data
-  const Modal = ({ isOpen, onClose }) => {
-    return (
-      <>
-        {isOpen && (
-          <div className="overlay" onClick={onClose}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <span className="close" onClick={onClose}>
-                &times;
-              </span>
-              <h2>Input Data</h2>
 
-              {/* name input */}
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                id="Name"
-                value={transactionData.name}
-                onChange={(e) =>
-                  setTransactionData({
-                    ...transactionData,
-                    name: e.target.value,
-                  })
-                }
-              />
-
-              {/* amount input */}
-              <label htmlFor="amount">Amount</label>
-              <input
-                type="number"
-                id="amount"
-                value={transactionData.amount}
-                onChange={(e) =>
-                  setTransactionData({
-                    ...transactionData,
-                    amount: e.target.value !== "" ? Number(e.target.value) : 0,
-                  })
-                }
-              />
-
-              {/* date input */}
-              <label htmlFor="date">Date</label>
-              <input
-                type="date"
-                id="date"
-                value={transactionData.date}
-                onChange={(e) =>
-                  setTransactionData({
-                    ...transactionData,
-                    date: e.target.value,
-                  })
-                }
-              />
-
-              {/* category input */}
-              <label htmlFor="Category">Category</label>
-              <input
-                type="text"
-                id="Category"
-                value={transactionData.category}
-                onChange={(e) =>
-                  setTransactionData({
-                    ...transactionData,
-                    category: e.target.value,
-                  })
-                }
-              />
-
-              <button onClick={addTransactionToTable}>{modalAction}</button>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  };
 
   return (
     <div>
@@ -190,7 +201,14 @@ export const Spending = (props) => {
         <button className="new-transaction" onClick={openModal}>
           +New
         </button>
-        <Modal isOpen={isModalOpen} onClose={closeModal} />
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          transactionData={transactionData}
+          setTransactionData={setTransactionData}
+          addTransactionToTable={addTransactionToTable}
+          modalAction={modalAction}
+        />
       </div>
 
       <div className="main-table">
