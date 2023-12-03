@@ -61,8 +61,21 @@ const GraphApp = () => {
     console.log("Category:" + data[i].category);
      
   }
+
+
   
-  const uniqueDates = [...new Set(data.map(item => item.date))];
+
+  // console.log("hello:");
+  // console.log(uniqueDates);
+
+
+  const formatMonth = (date) => {
+    const [year, month] = date.split('-');
+    const monthName = new Date(`${year}-${month}-01`).toLocaleString('default', { month: 'long' });
+    return `${monthName} ${year}`;
+  };
+
+  const uniqueDates = [...new Set(data.map(item => formatMonth(item.date)))];
   const uniqueCategories = [...new Set(data.map(item => item.category))];
 
   useEffect(() => {
@@ -78,11 +91,13 @@ const GraphApp = () => {
   
     // Filter data based on selected date and category
     const filteredData = data.filter(item => {
-      return (
-        (selectedDate === "All" || item.date === selectedDate) &&
-        (selectedCategory === "All" || item.category === selectedCategory)
-      );
-    });
+    const selectedMonth = selectedDate === 'All' ? '' : selectedDate.split(' ')[0]; // Extract month name
+    const itemMonth = formatMonth(item.date).split(' ')[0]; // Extract month name from item
+    return (
+      (selectedDate === 'All' || itemMonth === selectedMonth) &&
+      (selectedCategory === "All" || item.category === selectedCategory)
+    );
+  });
   
     // Create a new Chart instance
     chartRef.current.chart = new Chart(ctx, {
@@ -113,6 +128,9 @@ const GraphApp = () => {
       },
     });
   }, [data, selectedDate, selectedCategory]);
+
+
+  
 
   return (
     <div>
