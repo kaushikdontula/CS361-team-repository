@@ -81,7 +81,7 @@ const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransa
 const CategorySelect = ({categories, filterByCategory}) => {
   console.log(categories)
   // Sample array of options
-  const options = ["Rent", "R"];
+  const options = categories;
 
   // State to track selected options
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -131,7 +131,7 @@ export const Spending = (props) => {
   // state to manage rows of transaction data
   const [rows, setRows] = useState([]);
 
-  const categories = [];
+  const [categories, setCategories] = useState([]);
 
   // state for managing model
   const [isModalOpen, setModalOpen] = useState(false);
@@ -148,13 +148,15 @@ export const Spending = (props) => {
     category: "",
   });
 
-  const setCategories = (data) =>{
+  const setCategoriesFun = (data) =>{
+    var cats = categories;
     for(let i = 0; i < data.length; i++){
       if(categories.includes(data[i]['category'])){
         continue;
       }
-      categories.push(data[i]['category'])
+      cats.push(data[i]['category'])
     }
+    setCategories(cats);
   }
 
   // state to manage array of transaction objects
@@ -170,7 +172,7 @@ export const Spending = (props) => {
           <SpendingTable key={index} data={transaction} onRemove={removeTransaction} onEdit={editTransaction}/>
         ))
       );
-      setCategories(storedTransactions);
+      setCategoriesFun(storedTransactions);
 
     }
   }, []);
@@ -231,7 +233,7 @@ export const Spending = (props) => {
   
     // Update local storage
     localStorage.setItem(localStorageKey, JSON.stringify(updatedTransactions));
-  
+    setCategoriesFun(updatedTransactions)
     closeModal();
   };
   const removeTransaction = (transactionToRemove) => {
