@@ -14,6 +14,7 @@ const SettingsPage = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [notificationsOn, setNotificationsOn] = useState(true);
 
   const handleEditSpendingData = () => {
     setEditCardName(!editCardName);
@@ -146,6 +147,8 @@ const SettingsPage = () => {
         <button type="button" onClick={toggleTheme}>Toggle Dark Mode</button>
         <h1>
         <button type="button" onClick={handleChangePassword}>Change Password</button>
+        </h1>
+        <h1>
         <input
               type="password"
               value={currentPassword}
@@ -159,6 +162,8 @@ const SettingsPage = () => {
                 width: '300px'
               }}
             />
+      </h1>
+      <h1>
         <input
               type="password"
               value={newPassword}
@@ -173,6 +178,15 @@ const SettingsPage = () => {
               }}
             />
       </h1>
+      <h1>
+      <button onClick={(e) => {
+  e.preventDefault();
+  setNotificationsOn(!notificationsOn);
+}}>
+  {notificationsOn ? 'Turn off notifications' : 'Turn on notifications'}
+      </button>
+      </h1>
+        
       </form>
     </div>
   );
