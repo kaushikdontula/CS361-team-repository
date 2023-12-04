@@ -8,14 +8,25 @@ const SettingsPage = () => {
   const { toggleTheme } = useContext(ThemeContext);
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [cardName, setCardName] = useState('');
+  const [changedCardName, setChangedCardName] = useState('');
   const [showCardName, setShowCardName] = useState(false);
+  const [editCardName, setEditCardName] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const navigate = useNavigate();
   const handleEditSpendingData = () => {
-    navigate("/editSpending");
+    setEditCardName(!editCardName);
+  };
+
+  const handleSubmitCardChange = (event) => {
+    setChangedCardName(event.target.value);
+  };
+
+  const handleSubmitCardNameChange = (event) => {
+    alert("Updated card name submitted: " + changedCardName);
+    localStorage.setItem('cardName', changedCardName);
+    setEditCardName(!editCardName);
   };
 
   const handleSaveData = () => {
@@ -32,19 +43,22 @@ const SettingsPage = () => {
   const handleLogout = () => {
     window.location.href = "/";
   };
+  
+  const handleChangePassword = () => {
+  };
 
   const handleCardNameChange = (event) => {
     setCardName(event.target.value);
-    localStorage.setItem('cardName', event.target.value);
   };
 
   const handleAddSpendingMethod = () => {
     setShowCardName(!showCardName);
   };
 
-  const handleSubmitCardName = () => {
+  const handleSubmitCardName = (event) => {
     // Handle card name submission here
     alert("Card name submitted: " + cardName);
+    localStorage.setItem('cardName', cardName);
     setShowCardName(!showCardName);
   };
 
@@ -86,13 +100,28 @@ const SettingsPage = () => {
               <button type="button" onClick={handleSubmitCardName}>Submit</button>
             </div>
           ) : (
-            <div>
               <button type="button" onClick={handleAddSpendingMethod}>Add Spending Method</button>
-                          </div>
           )}
-        </h1>
-        <h1>
+          {editCardName ? (
+            <div>
+              <input
+                type="text"
+                value={changedCardName}
+                onChange={handleSubmitCardChange}
+                placeholder={`Current card name: ${localStorage.getItem('cardName')}`}
+                style={{
+                  padding: '10px',
+                  fontSize: '16px',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  width: '300px'
+                }}
+              />
+              <button type="button" onClick={handleSubmitCardNameChange}>Submit</button>
+            </div>
+          ) : (
             <button type="button" onClick={handleEditSpendingData}>Edit Spending Information</button>
+            )}
         </h1>
         <h1>
           <button type="button" onClick={handleSaveData}>Manual backup</button>
