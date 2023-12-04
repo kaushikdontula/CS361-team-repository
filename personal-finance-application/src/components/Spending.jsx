@@ -2,71 +2,6 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { SpendingTable } from "./SpendingTable";
 
-export const localStorageKey = "transactionsData";
-
-export const Spending = (props) => {
-  const localStorageKey = "transactionsData";
-
-  // state to manage rows of transaction data
-  const [rows, setRows] = useState([]);
-
-  // state for managing model
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  // state to manage transaction input data
-  const [transactionData, setTransactionData] = useState({
-    name: "",
-    amount: 0,
-    date: "",
-    category: "",
-  });
-
-  // state to manage array of transaction objects
-  const [transactionsData, setTransactionsData] = useState([]);
-
-  useEffect(() => {
-    // Load transactions data from local storage on component mount
-    const storedTransactions = JSON.parse(localStorage.getItem(localStorageKey));
-    if (storedTransactions) {
-      setTransactionsData(storedTransactions);
-      setRows(
-        storedTransactions.map((transaction, index) => (
-          <SpendingTable key={index} data={transaction} />
-        ))
-      );
-    }
-  }, []);
-
-  // adding a transaction to the table
-  const addTransactionToTable = () => {
-    // create a new transaction object
-    const newTransaction = { ...transactionData };
-
-    // add the transaction object to the array of transactions
-    setTransactionsData((prevTransactions) => [...prevTransactions, newTransaction]);
-
-    // update the rows for the table
-    setRows((prevRows) => [
-      ...prevRows,
-      <SpendingTable key={prevRows.length} data={newTransaction} />,
-    ]);
-
-    // update local storage
-    localStorage.setItem(localStorageKey, JSON.stringify([...transactionsData, newTransaction]));
-    // console.log(localStorage.getItem(localStorageKey));
-
-
-    closeModal();
-  };
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   // modal component to input transaction data
 const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransactionToTable, modalAction }) => {
   return (
@@ -143,11 +78,60 @@ const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransa
   );
 };
 
+const CategorySelect = ({categories, filterByCategory}) => {
+  console.log(categories)
+  // Sample array of options
+  const options = ["Rent", "R"];
+
+  // State to track selected options
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  // Handler for option selection
+  const handleSelectChange = (event) => {
+    const selectedValues = Array.from(event.target.options)
+      .filter((option) => option.selected)
+      .map((option) => option.value);
+  
+    setSelectedOptions(selectedValues);
+    
+    filterByCategory(selectedValues)
+  };
+
+  return (
+    <div>
+      <label htmlFor="multiSelect">Select Multiple Options:</label>
+      <select
+        id="multiSelect"
+        multiple
+        value={selectedOptions}
+        onChange={handleSelectChange}
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+
+      <div>
+        <strong>Selected Options:</strong>
+        <ul>
+          {selectedOptions.map((selectedOption) => (
+            <li key={selectedOption}>{selectedOption}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
 export const Spending = (props) => {
   const localStorageKey = "transactionsData";
 
   // state to manage rows of transaction data
   const [rows, setRows] = useState([]);
+
+  const categories = [];
 
   // state for managing model
   const [isModalOpen, setModalOpen] = useState(false);
@@ -164,6 +148,15 @@ export const Spending = (props) => {
     category: "",
   });
 
+  const setCategories = (data) =>{
+    for(let i = 0; i < data.length; i++){
+      if(categories.includes(data[i]['category'])){
+        continue;
+      }
+      categories.push(data[i]['category'])
+    }
+  }
+
   // state to manage array of transaction objects
   const [transactionsData, setTransactionsData] = useState([]);
 
@@ -177,8 +170,31 @@ export const Spending = (props) => {
           <SpendingTable key={index} data={transaction} onRemove={removeTransaction} onEdit={editTransaction}/>
         ))
       );
+      setCategories(storedTransactions);
+
     }
   }, []);
+
+  const filterByCategory = (category) => {
+    var transactions = [];
+    const storedTransactions = JSON.parse(localStorage.getItem(localStorageKey));
+
+    for(let i = 0; i < storedTransactions.length; i++){
+      for(let j = 0; j < category.length; j++){
+        if(storedTransactions[i]['category'] === category[j]){
+          transactions.push(storedTransactions[i]); 
+          continue;
+        }
+      }
+      
+    }
+
+    setRows(
+      transactions.map((transaction, index) => (
+        <SpendingTable key={index} data={transaction} onRemove={removeTransaction} onEdit={editTransaction}/>
+      ))
+    );
+  }
 
   const addTransactionToTable = () => {
 
@@ -266,6 +282,10 @@ export const Spending = (props) => {
         <button className="new-transaction" onClick={openModal}>
           +New
         </button>
+        <CategorySelect
+          categories={categories}
+          filterByCategory={filterByCategory}
+        />
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
