@@ -1,43 +1,62 @@
-/* Add this to your Graph.css file or style block in your component */
 
-body {
-    margin: 0;
-    background: linear-gradient(79deg, #7439db, #c66fbc 48%, #f7944d); /* Replace with your linear gradient */
-    font-family: Arial, sans-serif;
-  }
-  
-  .Graph {
-    text-align: left;
-    padding: 20px;
-  }
-  
-  .GraphContainer {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: rgba(19, 19, 222, 0.2); /* Blue background with alpha for transparency */
-    backdrop-filter: blur(100px); /* Adjust the blur radius as needed */
-    border-radius: 50px;
-    padding: 100px;
-  }
-  
-  
-  .ExpenseList {
-    text-align: left;
-    list-style: none;
-    padding: 20;
-  }
-  
-  .ExpenseList li {
-    margin-bottom: 10px;
-    font-size: 17px;
-    color: #000000;
-  }
-  
-  h1 {
-    color: #fff; 
-  }
-  
-  .PieChartContainer .recharts-surface {
-    fill: #3a873d; /* Replace with your desired color */
-  }
+
+.PageContainer {
+  display: flex;
+}
+
+.Dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px; /* Add some margin for better spacing */
+}
+
+.MainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px; /* Add some margin for better spacing */
+}
+
+.GraphContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  margin: 20px; /* Add some margin for better spacing */
+}
+
+.ChartContainer {
+  margin: 10px; /* Add some margin for better spacing */
+}
+
+.ChartSwitch {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Add some margin for better spacing */
+}
+
+label {
+  color: #fff;
+  margin-right: 10px;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+input[type="radio"] {
+  margin-left: 5px;
+}
+
+/* Adjust the styling for the pie chart */
+.PieChartContainer .recharts-surface {
+  fill: #3a873d;
+}
