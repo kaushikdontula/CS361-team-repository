@@ -1,62 +1,105 @@
-
+body {
+  background-color: #191825;
+  font-family: sans-serif;
+  margin: 0;
+}
 
 .PageContainer {
   display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px; /* Add padding for space around the content */
+  box-sizing: border-box; /* Include padding and border in the total width and height */
 }
 
 .Dropdown {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 20px; /* Add some margin for better spacing */
+  width: 200px;
+  height: 300px;
+  text-align: center;
+  margin-right: 20px; /* Add space between the dropdown section and the graph */
+  border-radius: 4rem;
+  padding: 20px;
+  background-color: #865DFF;
 }
 
-.MainContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 20px; /* Add some margin for better spacing */
+.button {
+  margin-top: 10px; /* Add space between the dropdowns and the button */
+}
+
+/* Styling for the dropdowns and button */
+select,
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 4px;
+  background-color: #865DFF;
+  color: #fff;
+  cursor: pointer;
+}
+
+button {
+  background-color: #E384FF; /* Use the provided color for the button */
+}
+
+.CategoryDropdown {
+  margin-top: 20px; /* Add space between the toggle button and the category dropdown */
 }
 
 .GraphContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-grow: 1; /* Allow the graph container to grow and take available space */
+  width: 400px;
+  height: 400px;
+  margin: 1rem 20px 1rem 0; /* Add space between the graph container and other elements */
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  padding: 60px;
+  background-color: #865DFF;
   backdrop-filter: blur(10px);
-  border-radius: 10px;
-  margin: 20px; /* Add some margin for better spacing */
 }
 
-.ChartContainer {
-  margin: 10px; /* Add some margin for better spacing */
+.TransactionHistory {
+  
+  width: 300px;
+  max-height: 300px; /* Set maximum height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 20px;
+  background-color: #865DFF;
+  border-radius: 4rem;
+  transition: max-height 0.3s ease; /* Add transition for a smooth animation */
 }
 
-.ChartSwitch {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px; /* Add some margin for better spacing */
+.TransactionHistory.minimized {
+  max-height: 0; /* Minimize the height when minimized class is applied */
+  padding: 0;
+  overflow: hidden;
 }
 
-label {
+.TransactionHistory h2 {
   color: #fff;
-  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
-select {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #fff;
-  background-color: transparent;
-  color: #fff;
+.TransactionHistory ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-input[type="radio"] {
-  margin-left: 5px;
+.TransactionHistory li {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 10px;
 }
 
-/* Adjust the styling for the pie chart */
-.PieChartContainer .recharts-surface {
-  fill: #3a873d;
+.TransactionHistory li:last-child {
+  border-bottom: none;
 }

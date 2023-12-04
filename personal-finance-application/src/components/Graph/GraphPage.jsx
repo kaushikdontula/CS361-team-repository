@@ -138,15 +138,12 @@ const GraphApp = () => {
 
   return (
     <div>
-      {/* Include NavBar component */}
       <NavBar />
 
       <div className="PageContainer">
         {/* Dropdowns on the left side */}
-        <div className="Dropdown">
-          <button onClick={toggleChartType}>
-          Toggle Chart Type ({chartType === "pie" ? "Bar" : "Pie"})
-          </button>
+      <div className="Dropdown">
+        <div className="dateDropdown">
           <label htmlFor="dateDropdown">Select Month: </label>
           <select
             id="dateDropdown"
@@ -160,21 +157,42 @@ const GraphApp = () => {
               </option>
             ))}
           </select>
-
-          <label htmlFor="categoryDropdown">Select Category: </label>
-          <select
-            id="categoryDropdown"
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            value={selectedCategory}
-          >
-            <option value="All">All</option>
-            {uniqueCategories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
+          </div>
+          <div className="button">
+            <button onClick={toggleChartType}>
+            Toggle Chart Type ({chartType === "pie" ? "Bar" : "Pie"})
+            </button>
+          </div>
+          <div className="CategoryDropdown">
+            <label htmlFor="categoryDropdown">Select Category: </label>
+            <select
+              id="categoryDropdown"
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              value={selectedCategory}
+            >
+              <option value="All">All</option>
+              {uniqueCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
         </div>
+      </div>
+      <div className="TransactionHistory">
+            <h2>Transaction History</h2>
+            <ul>
+              {retrievedObject.map((transaction, index) => (
+                <li key={index}>
+                  <strong>{transaction.name}</strong>
+                  <p>Amount: ${transaction.amount}</p>
+                  <p>Date: {transaction.date}</p>
+                  <p>Category: {transaction.category}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        
 
        
         {/* Main content container */}
@@ -182,10 +200,8 @@ const GraphApp = () => {
           {/* Charts */}
           <div className="GraphContainer">
             <canvas ref={chartRef} width="400" height="400" />
-            {/* <canvas ref={barChartRef} width="400" height="400" /> */}
           </div>
 
-          {/* Additional content goes here if needed */}
         </div>
       </div>
     </div>
