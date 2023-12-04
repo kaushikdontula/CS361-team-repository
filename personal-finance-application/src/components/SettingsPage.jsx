@@ -74,15 +74,16 @@ const SettingsPage = () => {
   const handleChangePassword = () => {
     const storedPassword = secureLocalStorage.getItem('pass');
 
-    if (storedPassword != currentPassword) {
+    if (storedPassword !== currentPassword) {
       alert("passwords do not match");
     }
 
     if (newPassword.length < 8) {
       alert("password must be at least 8 characters");
     }
-    if (storedPassword == currentPassword && newPassword.length >= 8) {
-    alert("password changed successfully");
+    if (storedPassword === currentPassword && newPassword.length >= 8) {
+      alert("password changed successfully");
+      secureLocalStorage.setItem('pass', newPassword);
     }
   }
 
@@ -110,6 +111,7 @@ const SettingsPage = () => {
                   width: '300px'
                 }}
               />
+              <button type='button' onClick={handleAddSpendingMethod}>Cancel</button>
               <button type="button" onClick={handleSubmitCardName}>Submit</button>
             </div>
           ) : (
@@ -130,6 +132,7 @@ const SettingsPage = () => {
                   width: '300px'
                 }}
               />
+              <button type='button' onClick={handleEditSpendingData}>Cancel</button>
               <button type="button" onClick={handleSubmitCardNameChange}>Submit</button>
             </div>
           ) : (
