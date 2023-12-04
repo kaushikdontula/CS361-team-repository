@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { SpendingTable } from "./SpendingTable";
+import Select from 'react-select'
+
 
   // modal component to input transaction data
 const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransactionToTable, modalAction }) => {
@@ -79,48 +81,55 @@ const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransa
 };
 
 const CategorySelect = ({categories, filterByCategory}) => {
-  console.log(categories)
+  // const [selectedOptions, setSelectedOptions] = useState([])
+  var selectedOptions = ["All"];
+  
   // Sample array of options
-  const options = categories;
+  const optionsArr = ["All", ...categories];
 
+  const options = optionsArr.map((cat) => ({
+    value: cat, // You can use a different logic to generate the value
+    label: cat,
+  }));
+
+  
   // State to track selected options
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
   // Handler for option selection
-  const handleSelectChange = (event) => {
-    const selectedValues = Array.from(event.target.options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
+  // const handleSelectChange = (event) => {
+  //   console.log(event)
+  //   const selectedValues = Array.from(event.target.value)
+  //     .filter((option) => option.selected)
+  //     .map((option) => option.value);
   
-    setSelectedOptions(selectedValues);
+  //   setSelectedOptions(selectedValues);
     
-    filterByCategory(selectedValues)
-  };
+  //   filterByCategory(selectedValues)
+  // };
+
+  const handleChange = (data) => {
+    // console.log(data)
+    var tempArr = []
+    for(let i = 0; i < data.length; i++){
+      // break
+      tempArr.push(data[i]['value'])
+      console.log("pushing to tempArr: ", tempArr)
+      // setSelectedOptions(tempArr);
+
+    }
+    selectedOptions = tempArr 
+    if(selectedOptions.length > 0)
+      filterByCategory(selectedOptions)
+    else{
+      filterByCategory(["All"])
+    }
+  }
 
   return (
     <div>
       <label htmlFor="multiSelect">Select Multiple Options:</label>
-      <select
-        id="multiSelect"
-        multiple
-        value={selectedOptions}
-        onChange={handleSelectChange}
-      >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-
-      <div>
-        <strong>Selected Options:</strong>
-        <ul>
-          {selectedOptions.map((selectedOption) => (
-            <li key={selectedOption}>{selectedOption}</li>
-          ))}
-        </ul>
-      </div>
+    
+      <Select options={options} isMulti='true' onChange={handleChange}/>
     </div>
   );
 };
@@ -183,7 +192,7 @@ export const Spending = (props) => {
 
     for(let i = 0; i < storedTransactions.length; i++){
       for(let j = 0; j < category.length; j++){
-        if(storedTransactions[i]['category'] === category[j]){
+        if(storedTransactions[i]['category'] === category[j] || category[j] === "All"){
           transactions.push(storedTransactions[i]); 
           continue;
         }
@@ -253,7 +262,6 @@ export const Spending = (props) => {
   };
 
   const editTransaction = (transactionToEdit) => {
-    console.log(transactionToEdit);
     setEditingTransaction(transactionToEdit);
     setTransactionData({
       name: transactionToEdit.name,
