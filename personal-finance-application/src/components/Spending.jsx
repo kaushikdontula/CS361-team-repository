@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { SpendingTable } from "./SpendingTable";
+import { localStorageKey } from "./constant";
 
   // modal component to input transaction data
 const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransactionToTable, modalAction }) => {

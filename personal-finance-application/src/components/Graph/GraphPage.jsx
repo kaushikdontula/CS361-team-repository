@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import NavBar from "../NavBar";
 import { Chart } from 'chart.js/auto';
 import './Graph.css';
-import { localStorageKey } from "../Spending";
+//import { localStorageKey } from "../Spending";
+import { localStorageKey } from "../constant";
 
 const GraphApp = () => {
   // Importing localStorageKey from Spending
