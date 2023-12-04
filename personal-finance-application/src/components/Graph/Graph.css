@@ -1,0 +1,62 @@
+
+
+.PageContainer {
+  display: flex;
+}
+
+.Dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px; /* Add some margin for better spacing */
+}
+
+.MainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px; /* Add some margin for better spacing */
+}
+
+.GraphContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  margin: 20px; /* Add some margin for better spacing */
+}
+
+.ChartContainer {
+  margin: 10px; /* Add some margin for better spacing */
+}
+
+.ChartSwitch {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Add some margin for better spacing */
+}
+
+label {
+  color: #fff;
+  margin-right: 10px;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+input[type="radio"] {
+  margin-left: 5px;
+}
+
+/* Adjust the styling for the pie chart */
+.PieChartContainer .recharts-surface {
+  fill: #3a873d;
+}

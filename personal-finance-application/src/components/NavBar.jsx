@@ -16,7 +16,7 @@ export default class NavBar extends Component {
                 <Link to="/login">Login</Link>
                 <Link to="/register">Register</Link>
                 <Link to="/spending">Spending</Link>
-
+                <Link class="link-txt" to="/GraphPage">Graphs</Link>
 
             </div>
         </div>

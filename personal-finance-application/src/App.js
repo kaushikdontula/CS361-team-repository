@@ -6,15 +6,17 @@ import {LoginPage} from './components/LoginPage';
 import {RegisterPage} from './components/RegisterPage';
 import SettingsPage from './components/SettingsPage';
 import {Spending} from './components/Spending';
-
+import  GraphPage  from "./components/Graph/GraphPage";
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-  const [submitted, setSubmitted] = useState(false);
+const [currentForm, setCurrentForm] = useState('login');
+const [submitted, setSubmitted] = useState(false);
 
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
+
+const toggleForm = (formName) => {
+setCurrentForm(formName);
+}
+
 
   const handleFormSubmit = () => {
     setSubmitted(true);
@@ -29,7 +31,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/spending" element={<Spending />} />
-
+            <Route path="/GraphPage" element={<GraphPage />} />
           </Routes>
         ) : (
           currentForm === "login" ? 
@@ -41,5 +43,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

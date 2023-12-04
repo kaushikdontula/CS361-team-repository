@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import { SpendingTable } from "./SpendingTable";
 import Select from 'react-select'
 
+import { localStorageKey } from "./constant";
 
   // modal component to input transaction data
 const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransactionToTable, modalAction }) => {
