@@ -44,9 +44,6 @@ const SettingsPage = () => {
     window.location.href = "/";
   };
   
-  const handleChangePassword = () => {
-  };
-
   const handleCardNameChange = (event) => {
     setCardName(event.target.value);
   };
