@@ -12,6 +12,9 @@ const GraphApp = () => {
   
   let  datapoints = localStorage.getItem(localStorageKey);
   let retrievedObject = JSON.parse(datapoints);
+  if(retrievedObject === null){
+    retrievedObject = [];
+  }
   const data = [];
 
   useEffect(() => {
