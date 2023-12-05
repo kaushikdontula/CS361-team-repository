@@ -16,7 +16,7 @@ const GraphApp = () => {
   const [chartType, setChartType] = useState("pie");
   // pust the below code in a function 
   let  datapoints = localStorage.getItem(localStorageKey);
-  let retrievedObject = JSON.parse(datapoints);
+  let retrievedObject = [];
   const data = [];
 
   useEffect(() => {

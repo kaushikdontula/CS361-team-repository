@@ -6,7 +6,7 @@ import {LoginPage} from './components/LoginPage';
 import {RegisterPage} from './components/RegisterPage';
 import SettingsPage from './components/SettingsPage';
 import {Spending} from './components/Spending';
-import  GraphPage  from "./components/Graph/GraphPage";
+import  GraphPage  from './components/Graph/GraphPage';
 import { ThemeContext } from './ThemeContext';
 
 function App() {
