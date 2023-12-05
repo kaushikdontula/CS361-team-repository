@@ -179,7 +179,20 @@ const GraphApp = () => {
             </select>
         </div>
       </div>
-      <div className="TransactionHistory">
+      
+        
+
+       
+        {/* Main content container */}
+        <div className="MainContent">
+          
+          {/* Charts */}
+          <div className="GraphContainer">
+            <canvas ref={chartRef} width="400" height="400" />
+          </div>
+
+        </div>
+        <div className="TransactionHistory">
             <h2>Transaction History</h2>
             <ul>
               {retrievedObject.map((transaction, index) => (
@@ -192,17 +205,6 @@ const GraphApp = () => {
               ))}
             </ul>
           </div>
-        
-
-       
-        {/* Main content container */}
-        <div className="MainContent">
-          {/* Charts */}
-          <div className="GraphContainer">
-            <canvas ref={chartRef} width="400" height="400" />
-          </div>
-
-        </div>
       </div>
     </div>
   );
