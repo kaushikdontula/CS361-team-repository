@@ -199,10 +199,10 @@ const GraphApp = () => {
             <ul>
               {retrievedObject.map((transaction, index) => (
                 <li key={index}>
-                  <strong>{transaction.name}</strong>
-                  <p>Amount: ${transaction.amount}</p>
-                  <p>Date: {transaction.date}</p>
-                  <p>Category: {transaction.category}</p>
+                  <strong>Name: </strong> {transaction.name}
+                  <p><strong>Amount:</strong> ${transaction.amount}</p>
+                  <p><strong>Date:</strong> {transaction.date}</p>
+                  <p><strong>Category:</strong> {transaction.category}</p>
                 </li>
               ))}
             </ul>
