@@ -2,19 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import NavBar from "../NavBar";
 import { Chart } from 'chart.js/auto';
 import './Graph.css';
-//import { localStorageKey } from "../Spending";
 import { localStorageKey } from "../constant";
 
 const GraphApp = () => {
-  // Importing localStorageKey from Spending
-  // const chartRef = useRef(null);
-  // const barChartRef = useRef(null);
   const chartRef = useRef(null);
-  //const mychart = useRef(null);
   const [selectedDate, setSelectedDate] = useState("All"); // Default to show all dates
   const [selectedCategory, setSelectedCategory] = useState("All"); // Default to show all categories
   const [chartType, setChartType] = useState("pie");
-  // pust the below code in a function 
+  
   let  datapoints = localStorage.getItem(localStorageKey);
   let retrievedObject = JSON.parse(datapoints);
   if(retrievedObject === null){
@@ -45,6 +40,21 @@ const GraphApp = () => {
     return color;
   };
 
+  retrievedObject.forEach((item) => {
+    const existingItem = data.find((dataItem) => dataItem.category === item.category);
+    if (existingItem) {
+      existingItem.value += item.amount;
+    } else {
+      data.push({
+        name: item.name,
+        value: item.amount,
+        date: item.date,
+        category: item.category,
+      });
+    }
+  });
+
+
   for (let i = 0; i < retrievedObject.length; i++) {
     data[i] = 
       { 
@@ -63,7 +73,7 @@ const GraphApp = () => {
      
   }
 
-  const formatMonth = (date) => {
+    const formatMonth = (date) => {
     const [year, month] = date.split('-');
     const monthName = new Date(`${year}-${month}-01`).toLocaleString('default', { month: 'long' });
     return `${monthName} ${year}`;
@@ -79,69 +89,68 @@ const GraphApp = () => {
   // UseEffect to load data and update charts
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
-    //const barCtx = barChartRef.current.getContext("2d");
-
+  
     // Destroy existing charts before creating new ones
     if (chartRef.current.chart) {
       chartRef.current.chart.destroy();
     }
-    // if (barChartRef.current.chart) {
-    //   chartRef.current.chart.destroy();
-    // }
-
+  
     // Filter data based on selected options
     const filteredData = data.filter(item => {
-      const selectedMonth = selectedDate === "All" ? "" : selectedDate.split(" ")[0];
-      const itemMonth = formatMonth(item.date).split(" ")[0];
-      return (
-        (selectedDate === "All" || itemMonth === selectedMonth) &&
-        (selectedCategory === "All" || item.category === selectedCategory)
+    const selectedMonthYear = selectedDate === "All" ? "" : selectedDate;
+    const itemMonthYear = formatMonth(item.date);
+    return (
+      (selectedDate === "All" || itemMonthYear === selectedMonthYear) &&
+      (selectedCategory === "All" || item.category === selectedCategory)
       );
     });
-
+  
     // Create new chart based on the selected chart type
-    if (chartType === "pie") {
-      chartRef.current.chart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: filteredData.map(item => item.category),
-          datasets: [
-            {
-              data: filteredData.map(item => item.value),
-              backgroundColor: filteredData.map(item => item.color || getRandomColor()),
+    chartRef.current.chart = new Chart(ctx, {
+      type: chartType,
+      data: {
+        labels: filteredData.map(item => item.category),
+        datasets: [
+          {
+            data: filteredData.map(item => item.value),
+            backgroundColor: filteredData.map(item => item.color || getRandomColor()),
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              color: 'rgb(255, 255, 255)'
             },
-          ],
-        },
-      });
-    } else if (chartType === "bar") {
-      chartRef.current.chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: filteredData.map(item => item.category),
-          datasets: [
-            {
-              label: "Amount",
-              data: filteredData.map(item => item.value),
-              backgroundColor: filteredData.map(() => getRandomColor()),
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const item = filteredData[context.dataIndex];
+                const name = item.name || ''; // Item name
+                const value = item.value || 0; // Item value
+                const date = item.date || ''; // Item date
+                return `${name}: $${value} (${date})`;
+              },
             },
-          ],
+          },
         },
-      });
-    }
-  }, [data, selectedDate, selectedCategory, chartType]);
+      },
+    });
+  }, [data, selectedDate, selectedCategory, chartType]);  
 
   return (
     <div>
-      {/* Include NavBar component */}
       <NavBar />
 
       <div className="PageContainer">
         {/* Dropdowns on the left side */}
-        <div className="Dropdown">
-          <button onClick={toggleChartType}>
-          Toggle Chart Type ({chartType === "pie" ? "Bar" : "Pie"})
-          </button>
-          <label htmlFor="dateDropdown">Select Date: </label>
+      <div className="Dropdown">
+        <div className="dateDropdown">
+          <label htmlFor="dateDropdown">Select Month: </label>
           <select
             id="dateDropdown"
             onChange={(e) => setSelectedDate(e.target.value)}
@@ -154,37 +163,53 @@ const GraphApp = () => {
               </option>
             ))}
           </select>
-
-          <label htmlFor="categoryDropdown">Select Category: </label>
-          <select
-            id="categoryDropdown"
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            value={selectedCategory}
-          >
-            <option value="All">All</option>
-            {uniqueCategories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
+          </div>
+          <div className="button">
+            <button onClick={toggleChartType}>
+            Toggle Chart Type ({chartType === "pie" ? "Bar" : "Pie"})
+            </button>
+          </div>
+          <div className="CategoryDropdown">
+            <label htmlFor="categoryDropdown">Select Category: </label>
+            <select
+              id="categoryDropdown"
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              value={selectedCategory}
+            >
+              <option value="All">All</option>
+              {uniqueCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
         </div>
-
-       
+      </div>
         {/* Main content container */}
         <div className="MainContent">
+          
           {/* Charts */}
           <div className="GraphContainer">
             <canvas ref={chartRef} width="400" height="400" />
-            {/* <canvas ref={barChartRef} width="400" height="400" /> */}
           </div>
 
-          {/* Additional content goes here if needed */}
         </div>
+        <div className="TransactionHistory">
+            <h2>Transaction History</h2>
+            <ul>
+              {retrievedObject.map((transaction, index) => (
+                <li key={index}>
+                  <strong>{transaction.name}</strong>
+                  <p>Amount: ${transaction.amount}</p>
+                  <p>Date: {transaction.date}</p>
+                  <p>Category: {transaction.category}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
       </div>
     </div>
   );
 };
 
 export default GraphApp;
-
