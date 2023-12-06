@@ -182,10 +182,6 @@ const GraphApp = () => {
             </select>
         </div>
       </div>
-      
-        
-
-       
         {/* Main content container */}
         <div className="MainContent">
           
@@ -214,4 +210,3 @@ const GraphApp = () => {
 };
 
 export default GraphApp;
-

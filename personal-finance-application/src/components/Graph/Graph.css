@@ -7,28 +7,32 @@ body {
 .PageContainer {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px; /* Add padding for space around the content */
-  box-sizing: border-box; /* Include padding and border in the total width and height */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.Dropdown {
-  width: 200px;
-  height: 300px;
-  text-align: center;
-  margin-right: 20px; /* Add space between the dropdown section and the graph */
-  border-radius: 4rem;
+.Dropdown,
+.GraphContainer,
+.TransactionHistory {
+  background-color: rgba(0, 0, 0, 0.35);
   padding: 20px;
-  background-color: #865DFF;
+  border-radius: 40px;
+  margin: 0 10px;
+}
+
+.CategoryDropdown {
+  margin-top: 20px;
 }
 
 .button {
-  margin-top: 10px; /* Add space between the dropdowns and the button */
+  margin-top: 10px;
 }
 
-/* Styling for the dropdowns and button */
 select,
 button {
   width: 100%;
@@ -36,48 +40,46 @@ button {
   margin: 5px 0;
   border: none;
   border-radius: 4px;
-  background-color: #865DFF;
+  background-color: rgba(134, 93, 255, 0.5);
   color: #fff;
   cursor: pointer;
 }
 
 button {
-  background-color: #E384FF; /* Use the provided color for the button */
+  background-color: #e384ff;
 }
 
-.CategoryDropdown {
-  margin-top: 20px; /* Add space between the toggle button and the category dropdown */
+/* Style to change the color of graph labels to white */
+.GraphContainer .chartjs-render-monitor .chartjs-tooltips label,
+.GraphContainer .chartjs-render-monitor .chartjs-legend li span {
+  color: #fff !important;
 }
 
 .GraphContainer {
-  flex-grow: 1; /* Allow the graph container to grow and take available space */
+  flex-grow: 1;
   width: 400px;
   height: 400px;
-  margin: 1rem 20px 1rem 0; /* Add space between the graph container and other elements */
+  margin: 1rem 10px;
 }
 
 canvas {
   width: 100%;
   height: 100%;
-  border-radius: 2rem;
-  padding: 60px;
-  background-color: #865DFF;
-  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .TransactionHistory {
-  
   width: 300px;
-  max-height: 300px; /* Set maximum height for the scrollable area */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 300px;
+  overflow-y: auto;
   padding: 20px;
-  background-color: #865DFF;
-  border-radius: 4rem;
-  transition: max-height 0.3s ease; /* Add transition for a smooth animation */
+  border-radius: 10px;
+  transition: max-height 0.3s ease;
 }
 
 .TransactionHistory.minimized {
-  max-height: 0; /* Minimize the height when minimized class is applied */
+  max-height: 0;
   padding: 0;
   overflow: hidden;
 }
