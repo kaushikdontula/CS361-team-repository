@@ -42,6 +42,7 @@ const SettingsPage = () => {
   };
 
   const handleLogout = () => {
+    localStorage.setItem('submitted', false);
     window.location.href = "/";
   };
   

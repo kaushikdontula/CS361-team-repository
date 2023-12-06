@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {LandingPage} from './components/LandingPage'
@@ -11,8 +11,21 @@ import { ThemeContext } from './ThemeContext';
 
 function App() {
 const [currentForm, setCurrentForm] = useState('login');
-const [submitted, setSubmitted] = useState(false);
+// const [submitted, setSubmitted] = useState(false);
 const [theme, setTheme] = useState('light');
+
+const [submitted, setSubmitted] = useState(() => {
+  // Retrieve the login status from local storage on component mount
+  const storedLoggedIn = localStorage.getItem('submitted');
+  return storedLoggedIn ? JSON.parse(storedLoggedIn) : false;
+});
+
+
+// Save the login status to local storage whenever it changes
+useEffect(() => {
+
+  localStorage.setItem('submitted', JSON.stringify(submitted));
+}, [submitted]);
 
 
 

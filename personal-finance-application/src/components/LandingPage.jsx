@@ -8,7 +8,7 @@ export const LandingPage = (props) => {
     return(
         <div>
             <NavBar/>
-            <div>hello {localStorage.getItem('name')}</div>
+            <div>Hello {localStorage.getItem('name')}</div>
         {/* // addd more things from other stuff */}
         </div>
     )
