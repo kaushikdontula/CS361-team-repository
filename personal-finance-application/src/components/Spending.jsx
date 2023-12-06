@@ -81,6 +81,8 @@ const Modal = ({ isOpen, onClose, transactionData, setTransactionData, addTransa
   );
 };
 
+
+
 const CategorySelect = ({categories, filterByCategory}) => {
   // const [selectedOptions, setSelectedOptions] = useState([])
   var selectedOptions = ["All"];
@@ -93,20 +95,6 @@ const CategorySelect = ({categories, filterByCategory}) => {
     label: cat,
   }));
 
-  
-  // State to track selected options
-
-  // Handler for option selection
-  // const handleSelectChange = (event) => {
-  //   console.log(event)
-  //   const selectedValues = Array.from(event.target.value)
-  //     .filter((option) => option.selected)
-  //     .map((option) => option.value);
-  
-  //   setSelectedOptions(selectedValues);
-    
-  //   filterByCategory(selectedValues)
-  // };
 
   const handleChange = (data) => {
     // console.log(data)
@@ -130,7 +118,35 @@ const CategorySelect = ({categories, filterByCategory}) => {
     <div>
       <label htmlFor="multiSelect">Select Multiple Options:</label>
     
-      <Select options={options} isMulti='true' onChange={handleChange}/>
+      <Select 
+        options={options}
+        isMulti='true' 
+        onChange={handleChange}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 0,
+          colors: {
+            ...theme.colors,
+            primary25: '#5a2d9c',
+            primary: 'black',
+            color:'black'
+          },
+        })}
+        styles={{
+          option: provided => ({
+            ...provided,
+            color: 'black'
+          }),
+          control: provided => ({
+            ...provided,
+            color: 'black'
+          }),
+          singleValue: provided => ({
+            ...provided,
+            color: 'black'
+          })
+        }}
+        />
     </div>
   );
 };
@@ -141,6 +157,7 @@ export const Spending = (props) => {
   // state to manage rows of transaction data
   const [rows, setRows] = useState([]);
 
+  //categories included in filter
   const [categories, setCategories] = useState([]);
 
   // state for managing model
@@ -158,6 +175,7 @@ export const Spending = (props) => {
     category: "",
   });
 
+  //set categories that're available
   const setCategoriesFun = (data) =>{
     var cats = categories;
     for(let i = 0; i < data.length; i++){
@@ -187,9 +205,22 @@ export const Spending = (props) => {
     }
   }, []);
 
+  //filter to include only chosen categories
   const filterByCategory = (category) => {
     var transactions = [];
     const storedTransactions = JSON.parse(localStorage.getItem(localStorageKey));
+    var showAll=false;
+    for(let counter = 0; counter < category.length; counter++){
+      if(category[counter] === "All"){
+        transactions = storedTransactions;
+        setRows(
+          transactions.map((transaction, index) => (
+            <SpendingTable key={index} data={transaction} onRemove={removeTransaction} onEdit={editTransaction}/>
+          ))
+        );
+        return;
+      }
+    }
 
     for(let i = 0; i < storedTransactions.length; i++){
       for(let j = 0; j < category.length; j++){
