@@ -49,11 +49,7 @@ button {
   background-color: #e384ff;
 }
 
-/* Style to change the color of graph labels to white */
-.GraphContainer .chartjs-render-monitor .chartjs-tooltips label,
-.GraphContainer .chartjs-render-monitor .chartjs-legend li span {
-  color: #fff !important;
-}
+
 
 .GraphContainer {
   flex-grow: 1;
@@ -105,3 +101,5 @@ canvas {
 .TransactionHistory li:last-child {
   border-bottom: none;
 }
+
+

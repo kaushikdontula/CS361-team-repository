@@ -122,6 +122,9 @@ const GraphApp = () => {
           legend: {
             display: true,
             position: 'top',
+            labels: {
+              color: 'rgb(255, 255, 255)'
+            },
           },
           tooltip: {
             callbacks: {
