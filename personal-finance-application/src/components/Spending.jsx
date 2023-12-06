@@ -102,7 +102,6 @@ const CategorySelect = ({categories, filterByCategory}) => {
     for(let i = 0; i < data.length; i++){
       // break
       tempArr.push(data[i]['value'])
-      console.log("pushing to tempArr: ", tempArr)
       // setSelectedOptions(tempArr);
 
     }
@@ -116,7 +115,7 @@ const CategorySelect = ({categories, filterByCategory}) => {
 
   return (
     <div>
-      <label htmlFor="multiSelect">Select Multiple Options:</label>
+      <label htmlFor="multiSelect">Select Categories:</label>
     
       <Select 
         options={options}
