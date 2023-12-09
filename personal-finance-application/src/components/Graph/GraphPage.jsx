@@ -65,21 +65,15 @@ const GraphApp = () => {
       };
   }
 
-  for (let i = 0; i < retrievedObject.length; i++) {
-    console.log("Name:" + data[i].name);
-    console.log("Amount:" + data[i].amount);
-    console.log("Date:" + data[i].date);
-    console.log("Category:" + data[i].category);
-     
-  }
-
-    const formatMonth = (date) => {
+  const formatMonth = (date) => {
+    console.log(date);
     const [year, month] = date.split('-');
-    const monthName = new Date(`${year}-${month}-01`).toLocaleString('default', { month: 'long' });
+    const utcDate = new Date(Date.UTC(year, month - 1, 1)); // Months are 0-indexed in JavaScript
+    const monthName = utcDate.toLocaleString('default', { month: 'long', timeZone: 'UTC' });
     return `${monthName} ${year}`;
-  };
+};
 
-  const uniqueDates = [...new Set(data.map(item => formatMonth(item.date)))];
+const uniqueDates = [...new Set(data.map(item => formatMonth(item.date)))];
   const uniqueCategories = [...new Set(data.map(item => item.category))];
 
   const toggleChartType = () => {
