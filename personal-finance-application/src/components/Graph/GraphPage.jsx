@@ -98,12 +98,15 @@ const uniqueDates = [...new Set(data.map(item => formatMonth(item.date)))];
       (selectedCategory === "All" || item.category === selectedCategory)
       );
     });
+
+    const displayLegend = chartType === "pie";
   
     // Create new chart based on the selected chart type
     chartRef.current.chart = new Chart(ctx, {
       type: chartType,
       data: {
         labels: filteredData.map(item => item.category),
+        
         datasets: [
           {
             data: filteredData.map(item => item.value),
@@ -114,10 +117,17 @@ const uniqueDates = [...new Set(data.map(item => formatMonth(item.date)))];
       options: {
         plugins: {
           legend: {
-            display: true,
+            display: displayLegend,
             position: 'top',
             labels: {
-              color: 'rgb(255, 255, 255)'
+              color: 'rgb(255, 255, 255)',
+              filter: function (legendItem, chartData) {
+                // Condition to hide the legend for 'undefined' label in bar chart
+                if (chartType === 'bar' && legendItem.text === 'undefined') {
+                  return false;
+                }
+                return true;
+              }
             },
           },
           tooltip: {
