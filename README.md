@@ -20,7 +20,7 @@ Before starting, ensure you have `npm` and `React` installed on your system.
 
 1. Clone the repository to your local machine:
    ```sh
-   git clone <repository-url>
+   git clone https://github.com/kaushikdontula/CS361-team-repository.git
    ```
 2. Navigate to the cloned directory and install the necessary packages:
    ```sh
